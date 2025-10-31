@@ -118,6 +118,7 @@ markdown:
   enable_rules:
   disable_rules:
   plugins:
+    - markdown-it-container
   anchors:
     level: 2
     collisionSuffix: ''
