@@ -1,13 +1,12 @@
 name: Generate the static files and deploy
 
 on:
-  push
-  # push:
-  #   branches:
-  #     - 'master'
-  #   paths:
-  #     - 'sources/**'
-  #     - '_config.yml'
+  push:
+    branches:
+      - 'master'
+    # paths:
+    #   - 'sources/**'
+    #   - '_config.yml'
 
 jobs:
   build:
