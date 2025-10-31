@@ -60,8 +60,9 @@ permalink: certificate-application-for-Ali4LetEnc.html
 
 若使用其他环境，或者不确定自己的环境，可以参照 `Certbot` 的[官方文档](https://certbot.eff.org/instructions)，注意选择 Wildcard (通配符证书) 的选项。
 
-> ⚠️重要  
-> 在过程中遇到任何问题，都可以查看 `Certbot` 的 [Userguide](https://eff-certbot.readthedocs.io/en/latest/using.html#user-guide)
+:::important
+在过程中遇到任何问题，都可以查看 `Certbot` 的 [Userguide](https://eff-certbot.readthedocs.io/en/latest/using.html#user-guide)
+:::
 
 > ⚠️  
 > 下面的操作都是在服务器上进行，请使用 `ssh` 或其他你喜欢的方式连接你的服务器。
