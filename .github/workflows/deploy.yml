@@ -34,6 +34,6 @@ jobs:
             ${{ runner.os }}-npm-
 
       - name: Check dependencies
-        run: ls -l node_modules
+        run: ls
 
 
