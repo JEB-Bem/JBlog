@@ -49,7 +49,7 @@ highlight:
   line_threshold: 5
   auto_detect: true
   tab_replace: '    '
-  wrap: false
+  wrap: true
   hljs: false
 prismjs:
   preprocess: true
