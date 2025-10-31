@@ -43,11 +43,12 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
-syntax_highlighter: 
+syntax_highlighter: highlight.js
 highlight:
   line_number: true
-  auto_detect: false
-  tab_replace: ''
+  line_threshold: 5
+  auto_detect: true
+  tab_replace: '    '
   wrap: true
   hljs: false
 prismjs:
@@ -120,10 +121,10 @@ markdown:
   anchors:
     level: 2
     collisionSuffix: ''
-    permalink: false
+    permalink: true
     permalinkClass: 'header-anchor'
     permalinkSide: 'left'
-    permalinkSymbol: '¶'
+    permalinkSymbol: '#'
     case: 0
     separator: '-'
   images:

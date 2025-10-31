@@ -258,10 +258,13 @@ requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='acme-staging-v02.api.
 
 出现类似下面的输出，这个地方的结果是删去了一个域名的输出，则是成功的：
 
-> 🎉🎉🎉  
-> 你可能同样无法成功。但是！不要气馁，除了这种自动化让 let's encrypt 颁发证书的方式，还有一种手动的方式，你可以参阅这个 Certbot [文档](https://eff-certbot.readthedocs.io/en/latest/using.html#manual)，他介绍了两种方式：  
-> **半自动的 http 挑战**和**另一种更加可靠的（对于网络不好的服务器）dns 挑战**。两种挑战同样使用 `certbot` 命令运行。dns 挑战需要在你的 DNS 提供商设置一个特殊的文本解析记录，然后就能够获得证书，其缺点也很明显，没办法自动获取证书。
-> 获取完证书，你可以直接
+<blockquote>
+<details><summary><b>🎉🎉🎉 你可能同样无法成功。但是！还有办法！</b> (click to show)</summary>
+除了这种自动化让 let's encrypt 颁发证书的方式，还有一种手动的方式，你可以参阅这个 Certbot <a href="https://eff-certbot.readthedocs.io/en/latest/using.html#manual">文档</a>，他介绍了两种方式：<br>
+<b>半自动的 http 挑战</b>和<b>另一种更加可靠的（对于网络不好的服务器）dns 挑战</b>。<br>
+两种挑战同样使用 `certbot` 命令运行。dns 挑战需要在你的 DNS 提供商设置一个特殊的文本解析记录，然后就能够获得证书，其缺点也很明显，没办法自动获取证书。 获取完证书，你可以直接进行<a href="#安装证书（为-Nginx）">这一步</a>。
+</details>
+</blockquote>
 
 ```bash
 $ sudo certbot certonly -d *.chrjeb.cn --manual --preferred-challenges dns --manual-auth-hook "alidns" --manual-cleanup-hook "alidns clean" --dry-run
