@@ -33,7 +33,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
 
+      - name: Install dependencies
+        run: npm ci || npm install
+
       - name: Check dependencies
-        run: ls
+        run: |
+          ls node_modules && \
+          npx hexo -v
 
 
