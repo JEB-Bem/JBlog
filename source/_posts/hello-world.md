@@ -4,4 +4,4 @@ title: Hello World
 
 This is JEB_Bem's Blog.
 
-It uses Hexo.
+It uses [Hexo](https://)
