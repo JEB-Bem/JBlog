@@ -44,5 +44,21 @@ jobs:
           ls node_modules && \
           npx hexo -v && \
           ls public
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        with:
+            SSH_PRIVATE_KEY: ${{ secrets.ALIYUNSECRET }}
+            ARGS: "-rlgoDzvc -i --delete"
+            SOURCE: "public/"
+            REMOTE_HOST: ${{ secrets.SERVER_DOMAIN }}
+            REMOTE_USER: ${{ secrets.REMOTE_USER }}
+            TARGET: ${{ secrets.REMOTE_TARGET }}
+            SCRIPT_BEFORE: |
+              whoami
+              ls -al
+            SCRIPT_AFTER: |
+              whoami
+              ls -al
+              echo $RSYNC_STDOUT
 
 
