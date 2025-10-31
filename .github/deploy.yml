@@ -1,0 +1,38 @@
+name: Generate the static files and deploy
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'sources/**'
+      - '_config.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true   # 可能主题也是一个 Git 仓库，需要继续拉取
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "npm"
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Check dependencies
+        run: ls -l node_modules
+
+
