@@ -1,8 +1,9 @@
 ---
 title: Aliyun & Let's Encrypt - 申请通配符证书
 date: 2025/10/31 17:50:58
+top: true
 tags: Linux
-categories: 随笔 教程
+categories: 教程
 permalink: certificate-application-for-Ali4LetEnc.html
 ---
 
@@ -192,9 +193,8 @@ wget https://cdn.jsdelivr.net/gh/justjavac/certbot-dns-aliyun@main/alidns.sh && 
 > ⚠️
 > 你可能会遇到网络问题，请参照下面的方法，否则请跳过下面的部分
 
-----
-
-#### 手动下载脚本并上传到服务器
+<details>
+  <summary><b>手动下载脚本并上传到服务器</b> (click to show)</summary>
 
 将这个 url 粘贴到服务器，会自动下载一个脚本（**若没有下载成功，请科学上网**）：
 
@@ -234,7 +234,7 @@ sudo cp alidns.sh /usr/local/bin && sudo chmod +x /usr/local/bin/alidns.sh && su
 
 好了，网络异常的解决方法到此结束。
 
-----
+</details>
 
 ### 申请证书
 

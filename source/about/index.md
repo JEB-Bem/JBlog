@@ -1,0 +1,7 @@
+---
+title: about
+date: 2025-11-01 00:56:01
+type: "about"
+categories:
+tags:
+---
