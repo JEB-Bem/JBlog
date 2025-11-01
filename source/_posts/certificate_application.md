@@ -4,6 +4,7 @@ date: 2025/10/31 17:50:58
 top: true
 tags: Linux
 categories: 教程
+github: https://github.com/JEB-Bem/JBlog/blob/master/source/_posts/certificate_application.md
 filename: certificate_application.md
 permalink: certificate-application-for-Ali4LetEnc.html
 ---
@@ -61,32 +62,13 @@ permalink: certificate-application-for-Ali4LetEnc.html
 
 若使用其他环境，或者不确定自己的环境，可以参照 `Certbot` 的[官方文档](https://certbot.eff.org/instructions)，注意选择 Wildcard (通配符证书) 的选项。
 
-:::spoi 但是
+:::tip
 在过程中遇到任何问题，都可以查看 `Certbot` 的 [Userguide](https://eff-certbot.readthedocs.io/en/latest/using.html#user-guide)
 :::
 
-:::note
-这是警告
-:::
-
-:::tip
-这是警告
-:::
-
-:::impo
-这是警告
-:::
-
-:::caut
-这是警告
-:::
-
 :::warn
-这是警告
+下面的操作都是在服务器上进行，请使用 `ssh` 或其他你喜欢的方式连接你的服务器。
 :::
-
-> ⚠️  
-> 下面的操作都是在服务器上进行，请使用 `ssh` 或其他你喜欢的方式连接你的服务器。
 
 首先使用 `apt` 安装需要的软件包：
 
@@ -117,9 +99,10 @@ sudo python3 -m venv /opt/certbot/    # 配置虚拟环境
 sudo /opt/certbot/bin/pip install --upgrade pip    # 更新 pip
 ```
 
-> ⚠️  
-> 不要忘了 `sudo`，可能会因为安装范围的问题出现难以发现的错误。
-> 遇到问题，请再次核对以上命令，没有问题就可以继续了。
+:::warn
+不要忘了 `sudo`，可能会因为安装范围的问题出现难以发现的错误。  
+遇到问题，请再次核对以上命令，没有问题就可以继续了。
+:::
 
 安装 Certbot 以及 `certbot-nginx` （用于帮助我们在后续自动配置 Nginx）：
 
@@ -167,9 +150,10 @@ aliyun
 
 现在可以给 Aliyun [配置凭证](https://help.aliyun.com/zh/cli/configure-credentials)。
 
-> ⚠️  
-> 下文我会同时给出操作和阿里云提供的帮助文档，请对照执行。
-> **需要注意的是 Aliyun 建议使用普通用户进行凭证配置，但由于 certbot 在超级用户下执行，所以运行 CLI 时需要加上 `sudo`。**
+:::warn
+下文我会同时给出操作和阿里云提供的帮助文档，请对照执行。  
+**需要注意的是 Aliyun 建议使用普通用户进行凭证配置，但由于 certbot 在超级用户下执行，所以运行 CLI 时需要加上 `sudo`。**
+:::
 
 1. 前往创建 RAM 用户的 [AccessKey](https://help.aliyun.com/zh/ram/user-guide/create-an-accesskey-pair?spm=a2c4g.11186623.0.0.212c332aH1pQJo#title-ebf-nrl-l0i)，若已经拥有并记得 id 和 key，可以跳过。
     我们需要前往[创建用户](https://ram.console.aliyun.com/users)，点击创建用户，注意需要允许 Access Key 访问。
@@ -203,8 +187,9 @@ aliyun
     ...........O8888888888888888888888...........D8888888888888888888888=...........
     ............ .:D8888888888888888888.........78888888888888888888O ..............
     ```
-    > ⚠️  
-    > 上面使用 `<Place-Holder>` 占位符的地方请自行替换成你自己的信息，其中的 `RegioinId` 请自行查阅该[列表](https://help.aliyun.com/zh/drp/support/region-ids)，根据服务器所处位置填入其中。
+    :::impo
+    上面使用 `<Place-Holder>` 占位符的地方请自行替换成你自己的信息，其中的 `RegioinId` 请自行查阅该[列表](https://help.aliyun.com/zh/drp/support/region-ids)，根据服务器所处位置填入其中。
+    :::
 
 接下来安装插件：
 
@@ -212,11 +197,8 @@ aliyun
 wget https://cdn.jsdelivr.net/gh/justjavac/certbot-dns-aliyun@main/alidns.sh && sudo cp alidns.sh /usr/local/bin && sudo chmod +x /usr/local/bin/alidns.sh && sudo ln -s /usr/local/bin/alidns.sh /usr/local/bin/alidns && rm alidns.sh
 ```
 
-> ⚠️
-> 你可能会遇到网络问题，请参照下面的方法，否则请跳过下面的部分
-
-<details>
-  <summary><b>手动下载脚本并上传到服务器</b> (click to show)</summary>
+:::tip
+:::spoi 你可能会遇到网络问题，请参照下面的方法，否则请跳过下面的部分(click to show)
 
 将这个 url 粘贴到服务器，会自动下载一个脚本（**若没有下载成功，请科学上网**）：
 
@@ -256,7 +238,7 @@ sudo cp alidns.sh /usr/local/bin && sudo chmod +x /usr/local/bin/alidns.sh && su
 
 好了，网络异常的解决方法到此结束。
 
-</details>
+:::
 
 ### 申请证书
 
@@ -274,19 +256,19 @@ An unexpected error occurred:
 requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='acme-staging-v02.api.letsencrypt.org', port=443): Read timed out. (read timeout=45)
 ```
 
-> ⚠️  
-> 另一种可能行得通的解决方法是删除一个证书匹配的域名，将上面的命令中的 `-d <Your-Domain>` 删去而保留 `-d *.<Your-Domain>`。
-> 需要注意的是，这会产生一个问题，以后访问 `https://chrjeb.cn` 的服务会显示不安全，而访问 `https://blog.chrjeb.cn` 等有子域名的服务则是安全的。
+:::tip
+另一种可能行得通的解决方法是删除一个证书匹配的域名，将上面的命令中的 `-d <Your-Domain>` 删去而保留 `-d *.<Your-Domain>`。
+需要注意的是，这会产生一个问题，以后访问 `https://chrjeb.cn` 的服务会显示不安全，而访问 `https://blog.chrjeb.cn` 等有子域名的服务则是安全的。
+:::
 
-出现类似下面的输出，这个地方的结果是删去了一个域名的输出，则是成功的：
+出现类似下面的输出（**这个地方的结果是删去了一个域名的输出**），则是成功的：
 
-<blockquote>
-<details><summary><b>🎉🎉🎉 你可能同样无法成功。但是！还有办法！</b> (click to show)</summary>
+:::note
+:::spoi 🎉🎉🎉 你可能同样无法成功。但是！还有办法！</b> (click to show)</summary>
 除了这种自动化让 let's encrypt 颁发证书的方式，还有一种手动的方式，你可以参阅这个 Certbot <a href="https://eff-certbot.readthedocs.io/en/latest/using.html#manual">文档</a>，他介绍了两种方式：<br>
 <b>半自动的 http 挑战</b>和<b>另一种更加可靠的（对于网络不好的服务器）dns 挑战</b>。<br>
 两种挑战同样使用 `certbot` 命令运行。dns 挑战需要在你的 DNS 提供商设置一个特殊的文本解析记录，然后就能够获得证书，其缺点也很明显，没办法自动获取证书。 获取完证书，你可以直接进行<a href="#安装证书（为-Nginx）">这一步</a>。
-</details>
-</blockquote>
+:::
 
 ```bash
 $ sudo certbot certonly -d *.chrjeb.cn --manual --preferred-challenges dns --manual-auth-hook "alidns" --manual-cleanup-hook "alidns clean" --dry-run
@@ -363,8 +345,10 @@ Successfully deployed certificate for chrjeb.cn to /etc/nginx/sites-enabled/jblo
 Successfully deployed certificate for chrjeb.cn to /etc/nginx/sites-enabled/jblog
 ...
 ```
-> 你可以指定多个域名/子域名，命令中的 `[...]` 表示若干个你想指定的域名，比如：
-> `-d www.chrjeb.cn -d blog.chrjeb.cn -d fanyi.chrjeb.cn -d chrjeb.cn`
+:::note
+你可以指定多个域名/子域名，命令中的 `[...]` 表示若干个你想指定的域名，比如：
+`-d www.chrjeb.cn -d blog.chrjeb.cn -d fanyi.chrjeb.cn -d chrjeb.cn`
+:::
 
 上面的命令会自动将证书安装到 Nginx 中，即对 Nginx 进行配置，你可以使用 `sudo certbot --nginx rollback` 来撤销刚才的操作
 
