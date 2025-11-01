@@ -4,6 +4,7 @@ date: 2025/10/31 17:50:58
 top: true
 tags: Linux
 categories: 教程
+filename: certificate_application.md
 permalink: certificate-application-for-Ali4LetEnc.html
 ---
 
@@ -60,8 +61,28 @@ permalink: certificate-application-for-Ali4LetEnc.html
 
 若使用其他环境，或者不确定自己的环境，可以参照 `Certbot` 的[官方文档](https://certbot.eff.org/instructions)，注意选择 Wildcard (通配符证书) 的选项。
 
-:::important
+:::spoi 但是
 在过程中遇到任何问题，都可以查看 `Certbot` 的 [Userguide](https://eff-certbot.readthedocs.io/en/latest/using.html#user-guide)
+:::
+
+:::note
+这是警告
+:::
+
+:::tip
+这是警告
+:::
+
+:::impo
+这是警告
+:::
+
+:::caut
+这是警告
+:::
+
+:::warn
+这是警告
 :::
 
 > ⚠️  
@@ -368,6 +389,8 @@ $ sudo crontab -e
 ## 不想申请通配符证书
 
 你可以直接在 `Certbot` [教程](https://certbot.eff.org/instructions?ws=nginx&os=pip&tab=default) 点击 default 选项继续，或者直接去云厂商申请免费证书。
+
+接着，你可以通过配置 Nginx 在同一个域名下，根据 path 来重定向到不同的服务，这是一个解决方法，另一个方法自然就是手动申请多个证书了。
 
 ----
 

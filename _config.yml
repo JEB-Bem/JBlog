@@ -4,7 +4,7 @@
 
 # Site
 title: 星潮星屿
-subtitle: 'JEB_Bem 的个人博客网站'
+subtitle: 'Less is More'
 description: ''
 keywords:
 author: JEB_Bem
@@ -118,14 +118,14 @@ markdown:
   enable_rules:
   disable_rules:
   plugins:
-    - markdown-it-container
+    - name: 'markdown-it-container'
   anchors:
     level: 2
     collisionSuffix: ''
     permalink: true
-    permalinkClass: 'header-anchor'
+    permalinkClass: 'headerlink'
     permalinkSide: 'left'
-    permalinkSymbol: '#'
+    permalinkSymbol: ''
     case: 0
     separator: '-'
   images:
