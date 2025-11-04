@@ -11,6 +11,15 @@ author: JEB_Bem
 language: zh-cn
 timezone: 'Asia/Shanghai'
 
+# Sitemap
+sitemap:
+  path:
+    - sitemap.xml
+    - sitemap.txt
+  rel: true
+  tags: true
+  categories: true
+
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://chrjeb.cn/
