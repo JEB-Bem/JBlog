@@ -26,7 +26,7 @@ new_urls.forEach((new_url) => {
   if (new_url.trim()) {
     console.log("new_url: ", new_url);
     console.log(`正在将 ${pre}${new_url} 到 待添加列表...`);
-    post_urls.push(new_url);
+    post_urls.push(`${pre}${new_url}`);
   }
 });
 
