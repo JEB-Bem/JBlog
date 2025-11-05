@@ -43,6 +43,11 @@ jobs:
           ls node_modules && \
           npx hexo -v && \
           ls public
+
+      - name: Update Search Engines
+        run: |
+          node action_scripts/update_search_engines.mjs
+
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         with:
@@ -60,8 +65,4 @@ jobs:
               ls -al
               echo $RSYNC_STDOUT
               echo "Finished"
-
-      - name: Update Search Engines
-        run: |
-          node action_scripts/update_search_engines.mjs
 
