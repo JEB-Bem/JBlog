@@ -26,11 +26,14 @@ old_urls.forEach((element) => {
 let new_urls = new_sitemap.trim().split('\n');
 
 let post_urls = [];
+let baidu_post_urls = [];
 new_urls.forEach((new_url) => {
   if (new_url.trim()) {
     console.log("new_url: ", new_url);
     console.log(`正在将 ${pre}${new_url} 添加到 待更新列表...`);
     post_urls.push(`${pre}${new_url}`);
+    console.log(`正在将 https://${BAIDU_DOMAIN}/${new_url} 添加到 待更新列表...`);
+    baidu_post_urls.push(`https://${BAIDU_DOMAIN}/${new_url}`);
   }
 });
 
@@ -85,7 +88,7 @@ if (post_urls) {
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
       },
-      body: post_urls.join("\n"),
+      body: baidu_post_urls.join("\n"),
     });
 
     console.log("✅ 请求已发送，响应状态信息：");
