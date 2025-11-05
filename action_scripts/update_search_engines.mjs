@@ -39,7 +39,6 @@ new_urls.forEach((new_url) => {
 
 if (post_urls) {
   // 给 Bing 推送
-  /*
   try {
     console.log("开始更新 Bing...");
     const bing_res = await fetch("https://api.indexnow.org/IndexNow", {
@@ -78,7 +77,7 @@ if (post_urls) {
     }
   } catch (err) {
     console.error("🚨 网络或解析错误：", err.message);
-  }*/
+  }
   // 给 Baidu 推送
   try {
     console.log("开始更新 Baidu...");
