@@ -1,0 +1,73 @@
+import fs from 'fs';
+
+const pre = "https://chrjeb.cn/";
+
+const res = await fetch("https://chrjeb.cn/sitemap.txt");
+let old_sitemap = '';
+if (res.ok) {
+  old_sitemap = await res.text();
+  // 首页会被剔除掉
+  old_sitemap = old_sitemap.replaceAll(pre, '');
+}
+
+let old_urls = old_sitemap.split('\n');
+
+let new_sitemap = fs.readFileSync('public/sitemap.txt', 'utf-8');
+new_sitemap = new_sitemap.replaceAll(pre, '');
+
+old_urls.forEach((element) => {
+  new_sitemap = new_sitemap.replace(element, '');
+});
+
+let new_urls = new_sitemap.trim().split('\n');
+
+let post_urls = [];
+new_urls.forEach((new_url) => {
+  if (new_url.trim()) {
+    console.log("new_url: ", new_url);
+    console.log(`正在将 ${pre}${new_url} 到 待添加列表...`);
+    post_urls.push(new_url);
+  }
+});
+
+// 给 Bing 推送
+try {
+  console.log("开始更新 Bing...");
+  const bing_res = await fetch("https://api.indexnow.org/IndexNow", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify({
+      host: "chrjeb.cn",
+      key: "3063153736194bc28fa87a51a7a59d43",
+      keyLocation: "https://chrjeb.cn/3063153736194bc28fa87a51a7a59d43.txt",
+      urlList: post_urls,
+    }),
+  });
+
+  console.log("✅ 请求已发送，响应状态信息：");
+  console.log("status:", bing_res.status);
+  console.log("statusText:", bing_res.statusText);
+
+  // 打印响应头
+  console.log("headers:");
+  for (const [key, value] of bing_res.headers.entries()) {
+    console.log(`  ${key}: ${value}`);
+  }
+
+  // 读取响应体
+  const text = await bing_res.text();
+  console.log("body:");
+  console.log(text);
+
+  // 逻辑判断
+  if (bing_res.ok) {
+    console.log("✅ Bing 更新成功");
+  } else {
+    console.error("❌ Bing 更新失败");
+  }
+} catch (err) {
+  console.error("🚨 网络或解析错误：", err.message);
+}
+

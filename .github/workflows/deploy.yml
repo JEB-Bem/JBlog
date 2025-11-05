@@ -61,4 +61,7 @@ jobs:
               echo $RSYNC_STDOUT
               echo "Finished"
 
+      - name: Update Search Engines
+        run: |
+          node action_scripts/update_search_engines.mjs
 

@@ -38,6 +38,8 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+  - 0982ee96234b4177b2b9ab090726eecb.txt
+  - robots.txt
 
 # Writing
 new_post_name: :title.md # File name of new posts
