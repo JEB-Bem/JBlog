@@ -1,8 +1,12 @@
 import fs from 'fs';
 
 const pre = "https://chrjeb.cn/";
+const DOMAIN = "chrjeb.cn";
+const BAIDU_DOMAIN = "www.chrjeb.cn";
+const BING_KEY = "3063153736194bc28fa87a51a7a59d43";
+const BAIDU_KEY = "xwuBBvzH3jeVwos8";
 
-const res = await fetch("https://chrjeb.cn/sitemap.txt");
+const res = await fetch(`https://${DOMAIN}/sitemap.txt`);
 let old_sitemap = '';
 if (res.ok) {
   old_sitemap = await res.text();
@@ -30,8 +34,9 @@ new_urls.forEach((new_url) => {
   }
 });
 
-// 给 Bing 推送
 if (post_urls) {
+  // 给 Bing 推送
+  /*
   try {
     console.log("开始更新 Bing...");
     const bing_res = await fetch("https://api.indexnow.org/IndexNow", {
@@ -40,9 +45,9 @@ if (post_urls) {
         "Content-Type": "application/json; charset=utf-8",
       },
       body: JSON.stringify({
-        host: "chrjeb.cn",
-        key: "3063153736194bc28fa87a51a7a59d43",
-        keyLocation: "https://chrjeb.cn/3063153736194bc28fa87a51a7a59d43.txt",
+        host: DOMAIN,
+        key: BING_KEY,
+        keyLocation: "https://${DOMAIN}/${BING_KEY}.txt",
         urlList: post_urls,
       }),
     });
@@ -67,6 +72,41 @@ if (post_urls) {
       console.log("✅ Bing 更新成功");
     } else {
       console.error("❌ Bing 更新失败");
+    }
+  } catch (err) {
+    console.error("🚨 网络或解析错误：", err.message);
+  }*/
+  // 给 Baidu 推送
+  try {
+    console.log("开始更新 Baidu...");
+    const baidu_res = await fetch("http://data.zz.baidu.com/urls?site=https://${BAIDU_DOMAIN}&token=${BAIDU_KEY}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+      },
+      body: post_urls.join("\n"),
+    });
+
+    console.log("✅ 请求已发送，响应状态信息：");
+    console.log("status:", baidu_res.status);
+    console.log("statusText:", baidu_res.statusText);
+
+    // 打印响应头
+    console.log("headers:");
+    for (const [key, value] of baidu_res.headers.entries()) {
+      console.log(`  ${key}: ${value}`);
+    }
+
+    // 读取响应体
+    const body = await baidu_res.json();
+    console.log("body:");
+    console.log(body);
+
+    // 逻辑判断
+    if (bing_res.ok) {
+      console.log("✅ Baidu 更新成功");
+    } else {
+      console.error("❌ Baidu 更新失败");
     }
   } catch (err) {
     console.error("🚨 网络或解析错误：", err.message);
