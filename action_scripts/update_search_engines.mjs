@@ -29,7 +29,7 @@ let post_urls = [];
 new_urls.forEach((new_url) => {
   if (new_url.trim()) {
     console.log("new_url: ", new_url);
-    console.log(`正在将 ${pre}${new_url} 到 待添加列表...`);
+    console.log(`正在将 ${pre}${new_url} 添加到 待更新列表...`);
     post_urls.push(`${pre}${new_url}`);
   }
 });
@@ -79,7 +79,8 @@ if (post_urls) {
   // 给 Baidu 推送
   try {
     console.log("开始更新 Baidu...");
-    const baidu_res = await fetch("http://data.zz.baidu.com/urls?site=https://${BAIDU_DOMAIN}&token=${BAIDU_KEY}", {
+    const baidu_res = await fetch(`http://data.zz.baidu.com/urls?site=https://${BAIDU_DOMAIN}&token=${BAIDU_KEY}`, {
+    // const baidu_res = await fetch(`http://localhost:3000/urls?site=https://${BAIDU_DOMAIN}&token=${BAIDU_KEY}`, {
       method: "POST",
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
@@ -103,7 +104,7 @@ if (post_urls) {
     console.log(body);
 
     // 逻辑判断
-    if (bing_res.ok) {
+    if (baidu_res.ok) {
       console.log("✅ Baidu 更新成功");
     } else {
       console.error("❌ Baidu 更新失败");
