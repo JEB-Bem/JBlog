@@ -37,7 +37,7 @@ new_urls.forEach((new_url) => {
   }
 });
 
-if (post_urls) {
+if (post_urls.length) {
   // 给 Bing 推送
   try {
     console.log("开始更新 Bing...");
