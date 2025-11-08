@@ -49,7 +49,7 @@ if (post_urls.length) {
       body: JSON.stringify({
         host: DOMAIN,
         key: BING_KEY,
-        keyLocation: "https://${DOMAIN}/${BING_KEY}.txt",
+        keyLocation: `https://${DOMAIN}/${BING_KEY}.txt`,
         urlList: post_urls,
       }),
     });
