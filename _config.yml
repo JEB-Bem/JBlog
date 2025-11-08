@@ -130,6 +130,8 @@ markdown:
   disable_rules:
   plugins:
     - name: 'markdown-it-container'
+    - name: '@renbaoshuo/markdown-it-katex'
+    - name: 'markdown-it-task-lists'
   anchors:
     level: 2
     collisionSuffix: ''

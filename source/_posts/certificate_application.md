@@ -7,6 +7,7 @@ categories: 教程
 github: https://github.com/JEB-Bem/JBlog/blob/master/source/_posts/certificate_application.md
 filename: certificate_application.md
 permalink: certificate-application-for-Ali4LetEnc.html
+description: 本文介绍如何使用 Certbot 向 Let's encrypt 申请证书，使用阿里云服务器。
 ---
 
 ----
