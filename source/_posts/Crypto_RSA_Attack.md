@@ -4,6 +4,7 @@ date: 2025/11/06 21:16:40
 tags: crypto
 categories: 笔记
 filename: Crypto_RSA_Attack.md
+description: RSA 共模攻击与低加密指数广播攻击
 ---
 
 ## 0x0 前言
@@ -296,7 +297,7 @@ $$
 
 由此我们就实现了 CRT 加速 RSA.
 
-#### 基于 CRT 的地加密指数广播攻击
+#### 基于 CRT 的低加密指数广播攻击
 
 如果在某次加密中加密指数 $e$ 的值较小，比如 $e = 3$，那么有 $c \equiv m^3 \pmod{N}$.
 
