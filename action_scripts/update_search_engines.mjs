@@ -2,7 +2,7 @@ import fs from 'fs';
 
 const pre = "https://chrjeb.cn/";
 const DOMAIN = "chrjeb.cn";
-const BAIDU_DOMAIN = "www.chrjeb.cn";
+const BAIDU_DOMAIN = "chrjeb.cn";
 const BING_KEY = "3063153736194bc28fa87a51a7a59d43";
 const BAIDU_KEY = "xwuBBvzH3jeVwos8";
 
@@ -32,7 +32,7 @@ new_urls.forEach((new_url) => {
     console.log("new_url: ", new_url);
     console.log(`正在将 ${pre}${new_url} 添加到 待更新列表...`);
     post_urls.push(`${pre}${new_url}`);
-    console.log(`正在将 https://${BAIDU_DOMAIN}/${new_url} 添加到 待更新列表...`);
+    console.log(`正在将 https://${BAIDU_DOMAIN}/${new_url} 添加到 百度待更新列表...`);
     baidu_post_urls.push(`https://${BAIDU_DOMAIN}/${new_url}`);
   }
 });

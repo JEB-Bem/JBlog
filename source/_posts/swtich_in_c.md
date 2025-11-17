@@ -3,8 +3,7 @@ title: Switch 语句与变量声明
 date: 2025/05/28 22:51:20
 tags: c/cpp
 categories: 笔记
-filename: certificate_application.md
-permalink: certificate_application.html
+filename: switch_in_c.md
 ---
 
 ----
