@@ -1,3 +1,6 @@
 [submodule "themes/oranges"]
 	path = themes/oranges
 	url = https://github.com/JEB-Bem/hexo-theme-oranges.git
+[submodule "presentations"]
+	path = presentations
+	url = git@github.com:JEB-Bem/Presentations.git

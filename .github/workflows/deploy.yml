@@ -35,14 +35,11 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
-      - name: Generate static files
+      - name: Generate hexo static files
         run: npx hexo generate
 
-      - name: Check dependencies
-        run: |
-          ls node_modules && \
-          npx hexo -v && \
-          ls public
+      - name: Move presentations to public directory
+        run: mv -r presentations/presentations/dist public/presentations
 
       - name: Update Search Engines
         run: |
