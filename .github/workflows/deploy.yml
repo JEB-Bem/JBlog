@@ -39,7 +39,7 @@ jobs:
         run: npx hexo generate
 
       - name: Move presentations to public directory
-        run: mv presentations/presentations/dist public/presentations
+        run: mv presentations/presentations/dist/* public/presentations/
 
       - name: Update Search Engines
         run: |
@@ -49,7 +49,7 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         with:
             SSH_PRIVATE_KEY: ${{ secrets.ALIYUNSECRET }}
-            ARGS: "-rlgoDzvc -i --delete"
+            ARGS: "-rlgoDzvc -i"
             SOURCE: "public/"
             REMOTE_HOST: ${{ secrets.SERVER_DOMAIN }}
             REMOTE_USER: ${{ secrets.REMOTE_USER }}
