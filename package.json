@@ -24,7 +24,7 @@
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0",
     "hexo-theme-landscape": "^1.0.0",
-    "katex": "^0.16.25",
+    "katex": "^0.16.28",
     "markdown-it-container": "^4.0.0",
     "markdown-it-task-lists": "^2.1.1"
   }
