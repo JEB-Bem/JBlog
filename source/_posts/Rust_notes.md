@@ -34,11 +34,11 @@ fn inner(x: &mut i32) {
 
 ## 5 使用结构体组织相关数据
 
-### Defining and Instantiating Structs
+### 结构体的定义与实例化
 
 #### 语法 & 基本使用
 
-**定义** 一个结构体:
+**定义**一个结构体:
 
 ```rust
 struct <结构体名> {
