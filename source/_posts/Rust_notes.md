@@ -7,8 +7,8 @@ filename: Rust_notes.md
 description: Rust Programming Language 的相关笔记.
 ---
 
-> 本笔记适用于有其他语言基础，想要~~速通~~ Rust 的人群使用（或许使用“复习”更恰当）. 章节对应于 “The Rust Programming Language”（《Rust 编程语言》）.  
-> 建议对照章节跳转阅读.
+> - 本笔记适用于有其他语言基础，想要~~速通~~ Rust 的人群使用（或许使用“复习”更恰当）. 章节对应于 “The Rust Programming Language”（《Rust 编程语言》）.
+> - 建议对照章节跳转阅读.
 
 ## 4 所有权
 
@@ -1240,7 +1240,8 @@ scores.insert(String::from("Blue"), 25);
 
 // 在键不存在时添加键值对
 // .entry() 返回 Entry<'_, K, V) 其中的 '_ 表示匿名生命周期
-// Entry::or_insert() 的定义是：如果对应的 Entry 键存在，则返回该键的值的一个可变引用，如果不存在，则将参数作为此键的新值插入，并返回新值的一个可变引用。
+// Entry::or_insert() 的定义是：如果对应的 Entry 键存在，则返回该键的值的一个
+// 可变引用，如果不存在，则将参数作为此键的新值插入，并返回新值的一个可变引用。
 scores.entry(String::from("Blue")).or_insert(50);
 
 // 基于旧值更新值
@@ -1268,6 +1269,203 @@ for (key, value) in map {
 ## 错误处理
 
 Rust 将错误分为两大类：**可恢复错误**和**不可恢复错误**。对于可恢复错误，例如文件未找到错误，我们通常只想向用户报告问题并重试操作。不可恢复错误总是错误的症状，例如尝试访问数组末尾之外的地址，因此我们希望立即停止程序。
+
+大多数语言不区分这两种错误类型，而是使用异常等机制以相同的方式处理它们。Rust 没有异常。相反，它有用于可恢复错误的类型 `Result<T, E>` 和在程序遇到不可恢复错误时停止执行的 `panic!` 宏。
+
+### 不可恢复错误
+
+> If an unrecoverable error occurs – one where you think, crap, this program is a dumpster fire… – you should *panic*. Panics terminate the program immediately and cannot be caught. (Side note: it’s technically possible to catch and recover from panics, but doing so really defeats the philosophy of error handling in Rust, so it’s not advised.)
+>
+> —— CS110L Lecture Notes
+
+在 Rust 中，有两种情形会导致程序崩溃：一是执行会导致代码崩溃的操作（比如访问数组越界）；二是显式调用 `panic!` 宏。
+
+:::tip
+**应对崩溃：回溯堆栈或中止程序**
+
+默认情况下，当发生崩溃时，程序会开始回溯，这意味着 Rust 会沿着堆栈向上移动并清理遇到的每个函数中的数据。然而，回溯和清理是一项大量工作。因此，Rust 允许你选择替代方案：立即中止，这会结束程序而不进行清理。  
+程序使用的内存随后需要由操作系统清理。如果您的项目中需要将生成的二进制文件尽可能小，可以通过在 Cargo.toml 文件中对应的部分添加 `panic = 'abort'`， Rust会从展开（unwinding）模式（即回溯清理）切换到在 panic 时中止（aborting）。例如，如果您想在发布模式下在恐慌时中止，可以添加如下内容：
+
+```toml
+[profile.release]
+panic = 'abort'
+```
+
+**显示调用栈**
+
+我们可以在运行时使用 `RUST_BACKTRACE=1` 环境变量来显示调用栈，需要注意的是必须启用调试符号，即使用 `cargo build` 或 `cargo run` 而不带 `--release` 标志.
+:::
+
+### 可恢复错误
+
+Result 用于处理潜在的可恢复错误：
+
+```rust
+enum Result<T, E> {
+    Ok(T),  // 成功
+    Err(E), // 失败
+}
+```
+
+举例：
+```rust
+use std::fs::File;
+
+fn main() {
+    let greeting_file_result = File::open("hello.txt");
+}
+```
+
+`File::open` 将 `std::fs::File` 作为成功类型 `T`，将 `std::io::Error` 作为失败类型 `E`. 与 `Option` 相似，我们可以用 `match`、`is_some()` 等工具进行处理。
+
+CS110L 有一个关于如何抉择使用 `Result` 还是 `Option` 的例子：
+
+```rust
+    pub fn from_fd(pid: usize, fd: usize) -> Option<OpenFile> {
+        let fd_path = format!("/proc/{pid}/fd/{fd}");
+        let name = OpenFile::path_to_name(fs::read_link(fd_path).ok()?.to_str()?);
+        let fd_info_path = format!("/proc/{pid}/fdinfo/{fd}");
+        let fd_info = fs::read_to_string(fd_info_path).ok()?;
+        let cursor = OpenFile::parse_cursor(&fd_info[..])?;
+        let access_mode = OpenFile::parse_access_mode(&fd_info[..])?;
+
+        Some(OpenFile {
+            name,
+            cursor,
+            access_mode,
+        })
+    }
+```
+
+> Note: whether this function returns Option or Result is a matter of style and context. Some people might argue that you should return Result, so that you have finer grained control over possible things that could go wrong, e.g. you might want to handle things differently if this fails because the process doesn't have a specified fd, vs if it fails because it failed to read a */proc* file. However, that significantly increases complexity of error handling. In our case, this does not need to be a super robust program and we don't need to do fine-grained error handling, so returning Option is a simple way to indicate that "hey, we weren't able to get the necessary information" without making a big deal of it.  
+> —— CS110L
+
+#### 匹配不同错误
+
+```rust
+use std::fs::File;
+use std::io::ErrorKind;
+
+fn main() {
+    let greeting_file_result = File::open("hello.txt");
+
+    let greeting_file = match greeting_file_result {
+        Ok(file) => file,
+        Err(error) => match error.kind() {
+            ErrorKind::NotFound => match File::create("hello.txt") {
+                Ok(fc) => fc,
+                Err(e) => panic!("Problem creating the file: {e:?}"),
+            },
+            _ => {
+                panic!("Problem opening the file: {error:?}");
+            }
+        },
+    };
+}
+```
+
+`File::open` 返回的值的类型是 `io::Error` ，这是一个由标准库提供的结构体。这个结构体有一个 `kind` 方法，我们可以调用它来获取一个 `io::ErrorKind` 值。枚举 `io::ErrorKind` 是由标准库提供的，它有表示 `io` 操作可能产生的不同错误类型的变体。我们想要使用的变体是 `ErrorKind::NotFound` ，它表示我们试图打开的文件还不存在。所以我们先匹配 `greeting_file_result` ，并在其内部匹配 `error.kind()` 。
+
+内部对 `error.kind()` 的匹配会检查其值是否为 `ErrorKind::NotFound`，如果是，会用 `File::create` 创建文件，由于这个函数也有可能失败，因此我们再次匹配其结果，如果失败，显示错误信息并 panic.
+
+#### `match` 的替代方案
+
+`match` 表达式实用但原始，我们可以使用闭包来处理 `Result`，比 `match` 更简洁.
+
+下面使用闭包和 `unwrap_or_else` 实现相同功能的代码：
+
+```rust
+use std::fs::File;
+use std::io::ErrorKind;
+
+fn main() {
+    let greeting_file = File::open("hello.txt").unwrap_or_else(|error| {
+        if error.kind() == ErrorKind::NotFound {
+            File::create("hello.txt").unwrap_or_else(|error| {
+                panic!("Problem creating the file: {error:?}");
+            })
+        } else {
+            panic!("Problem opening the file: {error:?}");
+        }
+    });
+    dbg!(greeting_file);
+}
+```
+
+此外，我们还可以使用 `unwrap` 和 `expect` 来便捷地在错误时引起 panic，具体用法可以参考[文档](https://doc.rust-lang.org/std/result/enum.Result.html#method.expect).
+
+#### 传播（Propagate）错误
+
+当函数的实现调用可能失败的操作时，您可以选择将错误返回给调用代码，以便调用代码决定如何处理。这称为传播错误，并将更多控制权交给调用代码，因为调用代码中可能有更多信息或逻辑来决定如何处理错误，而您的代码上下文中可能没有这些信息。比如下面的代码，函数名阐述了是从文件中读取用户名，这表示可能会出现错误，于是我们合理的将错误传播到调用方：
+
+```rust
+use std::fs::File;
+use std::io::{self, Read};
+
+fn read_username_from_file() -> Result<String, io::Error> {
+    let username_file_result = File::open("hello.txt");
+
+    let mut username_file = match username_file_result {
+        Ok(file) => file,
+        Err(e) => return Err(e),    // 将错误原样返回
+    };
+
+    let mut username = String::new();
+
+    // read_to_string 接收一个 buf，从文件读取到的字符串会拼接到其后
+    // 函数返回读取到的字符串的长度
+    match username_file.read_to_string(&mut username) {
+        Ok(_) => Ok(username),
+        Err(e) => Err(e),    // 将错误原样返回
+    }
+}
+```
+
+上面的代码非常格式化，于是我们可以使用 `?` 操作符简化这一过程:
+
+```rust
+use std::fs::File;
+use std::io::{self, Read};
+
+fn read_username_from_file() -> Result<String, io::Error> {
+    let mut username_file = File::open("hello.txt")?;
+    let mut username = String::new();
+    username_file.read_to_string(&mut username)?;
+    Ok(username)
+}
+```
+
+:::note
+`?` 运算符会通过标准库中的 `From` 特性中定义的 `from` 函数来将返回的错误类型转换为当前函数返回类型中定义的错误类型. 这在函数返回一个错误类型来表示函数可能失败的所有方式时非常有用.
+:::
+
+当然，实际上还有一个更短的方法来完成这一函数的功能：
+
+```rust
+use std::fs;
+use std::io;
+
+fn read_username_from_file() -> Result<String, io::Error> {
+    fs::read_to_string("hello.txt")
+}
+```
+
+:::note
+- `?` 还可以与 `Option<T>` 一起使用，成功则返回 `Some` 内的值，否则返回 `None`.
+- `?` 无法自动转换 `Option` 与 `Result`. 想要完成转换，可以在 `Result` 上使用 `ok()`方法或在`Option` 上使用 `ok_or(v)` 方法（返回 `Err(v)`）.
+- `?` 一般无法用于 `main` 函数，但可以添加一个返回类型，`main` 可以返回 `Result<(), E>`，这样就可以使用 `?` 了. 比如，我们可以返回 `Result<(), Box<dyn Error>>`，这个类型后面会提到.
+    另外，`main` 函数可以返回任何实现了 `std::process::Termination` 特质的类型，该特质包含一个返回 `ExitCode` 的函数 `report` 。
+:::
+
+### To panic! or Not to panic! 🤣🤣🤣🤔
+
+> 此部分可以当作拓展阅读，毕竟这篇文章是笔记性质的. 此部分[原文](https://rust-book.cs.brown.edu/ch09-03-to-panic-or-not-to-panic.html)
+
+到[这里](to_panic_or_not_to_panic.html)阅读此部分内容.
+
+#### 比编译器拥有更多信息的情况
+
+当您有其他逻辑确保 Result 将具有 Ok 值，但该逻辑不是编译器能理解的情况，也适合调用 expect 。您仍然需要处理一个 Result 值：尽管在您特定的情境中逻辑上不可能失败，但您所调用的操作在一般情况下仍有可能失败。如果您能通过手动检查代码确保您永远不会遇到 Err 变体，那么调用 expect 并在参数文本中说明您认为永远不会遇到 Err 变体的原因，是完全可以接受的。以下是一个例子：
 
 ## 附录 A [21+ Rust Pro Tips](https://www.youtube.com/watch?v=53XYcpCgQWE)
 
