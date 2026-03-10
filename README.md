@@ -7,9 +7,9 @@ And my theme is based on [@zchengsite/hexo-theme-oranges](https://github.com/zch
 ## TODO List
 
 - [x] Pseudo support GFM Alerts with markdown-it-container.
-- [ ] Fixed todo list rendering problem.
+- [x] Fixed todo list rendering problem.
 - [ ] Add a footnote plugin.
-- [ ] Adjust the colors in dark mode.
+- [x] Adjust the colors in dark mode.
 - [ ] Display the catalog with a bettr implementation.
 - [ ] Refine Github Actions especially cache some static files.
 - [ ] Cache some static files longer in browser.
