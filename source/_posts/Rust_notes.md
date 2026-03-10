@@ -1461,7 +1461,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
 
 > 此部分可以当作拓展阅读，毕竟这篇文章是笔记性质的. 此部分[原文](https://rust-book.cs.brown.edu/ch09-03-to-panic-or-not-to-panic.html)
 
-到[这里](to_panic_or_not_to_panic.html)阅读此部分内容.
+到 [这里](to_panic_or_not_to_panic.html) 阅读此部分内容.
 
 ## 附录 A [21+ Rust Pro Tips](https://www.youtube.com/watch?v=53XYcpCgQWE)
 

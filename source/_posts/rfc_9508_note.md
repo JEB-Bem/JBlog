@@ -44,10 +44,11 @@ permalink: rfc_9508_note.html
 
 ### 标量数字 - Scalar Numbers
 
-> [!TIP]  
-> Octet: 八位的字节，八位组  
->
-> 表示一个储存了八位二进制的数字序列/数组。
+:::tip
+Octet: 八位的字节，八位组
+
+表示一个储存了八位二进制的数字序列/数组。
+:::
 
 标量数字没有符号，且使用大端序储存。我们使用 `[xx]` 表示一个十六进制表示的八位字节（Octet），则对于下面的标量 n:
 
@@ -82,17 +83,19 @@ MPI 的结构是：
 [00 09 01 FF] <=> 511
 ```
 
-> [!IMPORTANT]  
-> [附加规则](https://www.rfc-editor.org/rfc/rfc9580.html#section-3.2-7)
->
-> - MPI 的大小应当是 `(MPI.length + 7) / 8 + 2` octets  
-> - length 描述从数值字段的最高非零位开始的长度
-> - MPI 中没有使用的位必须 (**MUST**) 为0
+:::impo
+[附加规则](https://www.rfc-editor.org/rfc/rfc9580.html#section-3.2-7)
 
-> [!TIP]
-> 使用 MPIs 编码其他数据
->
-> 在某些情况下，我们会使用 MPIs 对非整数数据进行编码，比如一个椭圆曲线 (Elliptic curve, EC) 的点，或者一个长度已知且固定的 octet 串。其表示形式与前文规定的相同。
+- MPI 的大小应当是 `(MPI.length + 7) / 8 + 2` octets  
+- length 描述从数值字段的最高非零位开始的长度
+- MPI 中没有使用的位必须 (**MUST**) 为0
+:::
+
+:::tip
+使用 MPIs 编码其他数据
+
+在某些情况下，我们会使用 MPIs 对非整数数据进行编码，比如一个椭圆曲线 (Elliptic curve, EC) 的点，或者一个长度已知且固定的 octet 串。其表示形式与前文规定的相同。
+:::
 
 ### 密钥 ID 和指纹 - Key IDs and Fingerprints
 
@@ -116,9 +119,9 @@ MPI 的结构是：
 
 一个 S2K 指定符用于将一个密码 (passphrase) 字符串转换为一个对称加密/解密密钥。需要使用 S2K 的密码用于加密私钥的秘密部分和对称加密消息。
 
-> [!TIP]
->
-> 以AES加密保护私钥为例，我们使用输入密码之后，需要将密码根据预先设定的算法转换为一个 AES 密钥（一般是 256 位），然后使用这个密钥来对称加密/解密我们储存的私钥。
+:::tip
+以AES加密保护私钥为例，我们使用输入密码之后，需要将密码根据预先设定的算法转换为一个 AES 密钥（一般是 256 位），然后使用这个密钥来对称加密/解密我们储存的私钥。
+:::
 
 **S2K Specifier Types**
 
@@ -131,7 +134,7 @@ MPI 的结构是：
 | 4       | Argon2                                 | 20                      | Yes                                  | [Section 3.7.1.4](https://www.rfc-editor.org/rfc/rfc9580.html#s2k-argon2)      |
 | 100-110 | Private or Experimental Use            | -                       | As appropriate (按需)                |                                                                                |
 
-> If "Yes" is not present in the "Generate?" column, the S2K entry is used only for reading in backward-compatibility mode and SHOULD NOT be used to generate new output.
+> If "Yes" is not present in the "Generate?" column, the S2K entry is used only for reading in backward-compatibility mode and SHOULD NOT be used to generate new output.  
 > 若 "Generate?" 不为 "Yes" 表示这种 S2K 仅用于在向后兼容 (新版本兼容旧版本) 的模式中进行读取且不应用于生成新输出。
 
 #### Simple S2K
@@ -147,9 +150,9 @@ Octet 1: hash algorithm (一个 hash 算法的 ID)
 
 若计算出来的 hash 值长度小于所需要的会话密钥长度，我们就需要使用不同长度的值为 0 的 octets 拼接在原始的密码前面，然后进行多轮hash，依次拼接，其过程如下：
 
-> [!TIP]
->
-> 在密码学中，`||` 表示拼接两个字节序列
+:::tip
+在密码学中，`||` 表示拼接两个字节序列
+:::
 
 ```
 # 假设 Hash(x) 能够产生长度为 20 的 hash value.
@@ -229,15 +232,15 @@ tag.size = 256      # 输出的 hash 长度
 
 ### S2K 的使用 - S2K Usage
 
-> [!CAUTION]
->
-> 对于 S2K 的实现
-> 1. 不得使用 Simple S2K
-> 2. 除非输入字符串具有高熵（用户输入的字符串一般不具有，而良好随机源生成的字符串可能具有），不得使用 Salted S2K
+:::caut
+对于 S2K 的实现
+1. 不得使用 Simple S2K
+2. 除非输入字符串具有高熵（用户输入的字符串一般不具有，而良好随机源生成的字符串可能具有），不得使用 Salted S2K
+:::
 
-> [!TIP]
->
-> Argon2 是标准的建议实现，因为 Iterated and Salted S2K 不提供 memory hardness.
+:::tip
+Argon2 是标准的建议实现，因为 Iterated and Salted S2K 不提供 memory hardness.
+:::
 
 #### 私钥加密 - Secret Key Encryption
 
@@ -249,10 +252,10 @@ tag.size = 256      # 输出的 hash 长度
 
 后续实现则通过在 `S2K usage octet` 中使用储存特殊值（`253(AEAD)`, `254(CFB)`, `255(MalleableCFB)` 等 加密模式的 ID） 来加密私钥，并在之后立即跟上一组描述如何由 `passphrase` 来产生对称密钥，以及相关参数的字段。
 
-> [!NOTE]
->
-> - 不同版本的 OpenPGP 包在二进制字段结构上有所不同。下面的表格按 S2K usage octet 分类，概括了第 5.5.3 节中每种加密格式的字段排列和处理细节。
-> - 下面的表格中 `check(x)` 表示 “2-octest 校验和”，即 `x` 中所有字节的和模 65536。`info` 和 `packetprefix` 参数在后文中会有详细描述。`Generate?` 缩写为 `Gen?`。
+:::note
+- 不同版本的 OpenPGP 包在二进制字段结构上有所不同。下面的表格按 S2K usage octet 分类，概括了第 5.5.3 节中每种加密格式的字段排列和处理细节。
+- 下面的表格中 `check(x)` 表示 “2-octest 校验和”，即 `x` 中所有字节的和模 65536。`info` 和 `packetprefix` 参数在后文中会有详细描述。`Generate?` 缩写为 `Gen?`。
+:::
 
 | S2K Usage Octet                                  | Shorthand（简写） | Encryption Parameter Fields                                                                           | Encryption                                                                               | Gen? |
 |--------------------------------------------------|-------------------|-------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|------|
@@ -280,16 +283,16 @@ tag.size = 256      # 输出的 hash 长度
     其中 `packetprefix` 即包前缀数据，用于验证包的完整性；  
     `nonce` 作为随机数也会被使用
 
-> When emitting a secret key (with or without passphrase protection), an implementation MUST only produce data from a row with "Generate?" marked as "Yes". Each row with "Generate?" marked as "No" is described for backward compatibility (for reading version 4 and earlier keys only) and MUST NOT be used to generate new output. Version 6 secret keys using these formats MUST be rejected.
+> When emitting a secret key (with or without passphrase protection), an implementation MUST only produce data from a row with "Generate?" marked as "Yes". Each row with "Generate?" marked as "No" is described for backward compatibility (for reading version 4 and earlier keys only) and MUST NOT be used to generate new output. Version 6 secret keys using these formats MUST be rejected.  
 > 在生成密钥是，必须 (**MUST**) 从 "Generate?" 为 "Yes" 的模式中生成，其他的仅能用于向后兼容。
 
-> [!NOTE]
->
-> 版本 6 的参数相比 版本 4 多增加了一对长度计数，每对计数宽度为 1 octet。
+:::note
+版本 6 的参数相比 版本 4 多增加了一对长度计数，每对计数宽度为 1 octet。
+:::
 
-> [!WARNING]
->
-> `Argon2` 仅用于使用 AEAD 模式的加密中。
+:::warn
+`Argon2` 仅用于使用 AEAD 模式的加密中。
+:::
 
 #### 对称密钥消息加密 - Symmetric Key Message Encryption
 
