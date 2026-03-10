@@ -1463,10 +1463,6 @@ fn read_username_from_file() -> Result<String, io::Error> {
 
 到[这里](to_panic_or_not_to_panic.html)阅读此部分内容.
 
-#### 比编译器拥有更多信息的情况
-
-当您有其他逻辑确保 Result 将具有 Ok 值，但该逻辑不是编译器能理解的情况，也适合调用 expect 。您仍然需要处理一个 Result 值：尽管在您特定的情境中逻辑上不可能失败，但您所调用的操作在一般情况下仍有可能失败。如果您能通过手动检查代码确保您永远不会遇到 Err 变体，那么调用 expect 并在参数文本中说明您认为永远不会遇到 Err 变体的原因，是完全可以接受的。以下是一个例子：
-
 ## 附录 A [21+ Rust Pro Tips](https://www.youtube.com/watch?v=53XYcpCgQWE)
 
 1. 使用`dbg!`宏来进行快速调试，方便快速、获取定位行号和变量的内容;
