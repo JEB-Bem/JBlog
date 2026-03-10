@@ -850,11 +850,424 @@ pub fn eat_at_restaurant() {
 
 #### `super` & 相对路径
 
-通过在路径开头使用 `super` 可以访问到以父模块为起点的相对路径，类似于文件系统中的 `..` 语法. 
+通过在路径开头使用 `super` 可以访问到以父模块为起点的相对路径，类似于文件系统中的 `..` 语法.
 
 #### 结构体与枚举类型的公开
 
 同样可以使用 `pub` 公开结构体与枚举类型。需要注意的是仅仅在定义结构体之前使用 `pub` 只会公开其本身，其内部的字段并不会被公开。我们需要在字段之前加上 `pub` 来公开某一字段.
+
+:::impo
+如果结构体的某一字段没有被公开，那么就必须提供一个公共的关联函数，比如 `new()` 来创建结构体的实例.
+:::
+
+**相反**，使用 `pub` 公开一个枚举类型会直接公开其所有变体.
+
+:::tip
+枚举类型默认公开其字段，结构体默认不公开其字段.
+:::
+
+### 使用 use 关键字将路径引入作用域
+
+类似 *Python* 中的 `import ... as ...`，*C++* 中的 `using`，我们在 Rust 中可以使用 `use <path> as <alias>` 的方式来引入路径.
+
+更类似的应该是将 `use` 当作文件系统中的 *link* 来理解.
+
+需要注意的是，**`use` 仅在 `use` 出现的作用域中起作用**，例如：
+
+```rust
+use crate::front_of_house::hosting;
+
+mod customer {
+    pub fn eat_at_restaurant() {
+        hosting::add_to_waitlist();
+    }
+}
+```
+
+解决方法是将 path 调整一下，并将 `use` 移动到 `customer mod` 中.
+
+::: tip
+**使用 `use` 引入路径的惯用做法**
+
+一般来说，对于函数，我们常常只引入到其父模块，这样既简化路径，又明确了函数非本地定义.  
+对于结构体、枚举以及其他 items，指定完整路径是惯用的做法.
+
+
+**例外**  
+若要同时引入两个相同的 item，只能引入它们的父模块或使用别名.
+:::
+
+#### 使用 pub use 重新导出名称
+
+如果在 `use` 前加上 `pub`，就相当于把这个名称重新导入到了当前模块下（用文件系统中的 link 会比较好理解），举个例子：
+
+```rust
+// lib.rs
+mod front_of_house;
+
+pub use crate::front_of_house::hosting;
+
+// front_of_house.rs
+pub mod hosting {
+    pub fn add_to_waitlist() {
+        println!("added");
+    }
+}
+
+// main.rs
+use restaurant::hosting;
+
+fn main() {
+    hosting::add_to_waitlist();
+}
+```
+
+#### 使用外部包
+
+我们前面提到,
+
+> “绝对路径是从 crate 根开始的完整路径；对于来自外部 crate 的代码，绝对路径以 **crate 名称**为起始，而对于来自当前 crate 的代码，它以字面量 `crate` 开头。”
+
+`use` 的使用技巧与前面所提到的大差不差. **需要注意的是使用外部包时应当在 *Cargo.toml* 中列出依赖，如果只在本地存在，需要添加本地包的路径.**
+
+#### 使用嵌套逻辑和通配符简化 use 列表
+
+```rust
+// --snip--
+use std::cmp::Ordering;
+use std::io;
+// --snip--
+
+// 简化
+// --snip--
+use std::{cmp::Ordering, io};
+// --snip--
+
+use std::io;
+use std::io::Write;
+
+// 简化
+use std::io::{self, Write};
+
+
+// 通配符 常用于导入所有测试内容
+use std::collections::*;
+```
+
+### 将模块分离到不同的文件中
+
+基本方法不多解释，就是前面提到的 cheat sheet 中的规范.
+
+:::note
+对于 crate root 中声明的名为 `front_of_house` 模块，编译器会在以下位置寻找模块的代码：
+- *src/front_of_house.rs*: 常用的方式
+- *src/front_of_house/mod.rs*: 较旧的风格
+
+对于子模块的代码放置风格同样有两种，与模块类似，*/mod.rs* 的写法同样是较旧的风格。
+
+**对于同一个（子）模块而言，同时使用两种声明风格会引起编译错误**，不同的模块之间风格可以混用.
+:::
+
+## 常见集合（Collections）
+
+Rust 的标准库包含了一些非常有用的数据结构，称为集合。大多数其他数据类型表示一个特定的值，但集合可以包含多个值。与内置的数组和元组类型不同，这些集合指向的数据存储在**堆**上，这意味着数据量不需要在编译时确定，并且可以在程序运行时增长或缩小。每种集合都有不同的能力和成本，我们主要讨论三种集合：
+
+- 向量（Vector）：允许并排（紧凑）储存多个值；
+- 字符串（String）：一组字符的集合；
+- 哈希映射（Hash Map）：他是数据结构——映射（Map）的特定实现.
+
+:::tip
+标准库提供的[其他类型的集合](https://doc.rust-lang.org/std/collections/index.html)
+:::
+
+### 向量
+
+一些基本的语法：
+
+```rust
+// 创建新的空向量
+let v: Vec<type> = Vec::new();
+// 指定长度与默认值
+let v[: Vec<type>] = vec![value; len];
+
+// 更新向量 - 要求 value 类型同为 type，v 为 mutable
+v.push(value);
+
+// 读取向量中的元素
+let var: type = v[index];
+let var: &type = &v[index];
+let var: Option<&type> = v.get(2);
+
+/* 遍历向量中的值
+ * `&v` 则 i 的类型为 &type
+ * `&mut v` 则 i 的类型为 &mut type 这个表达式在底层应该等价于 v.iter()
+ * `v` 则 i 的类型为 type
+ */
+for i in &v {
+    // --snip--
+}
+```
+
+#### for 遍历向量的工作方式
+
+![20260308-edc68adc6afc658f.png](./images/20260308-edc68adc6afc658f.png)
+
+这从底层原理解释了为什么无法边遍历边修改向量.
+
+:::tip
+`a..b` 也是一个表达式，其类型为 *Range<T>*
+:::
+
+#### 枚举在向量中的妙用
+
+有时候我们想用向量储存不同类型的值，我们可以枚举不同类型的变体，然后用向量来储存：
+
+```rust
+    enum SpreadsheetCell {
+        Int(i32),
+        Float(f64),
+        Text(String),
+    }
+
+    let row = vec![
+        SpreadsheetCell::Int(3),
+        SpreadsheetCell::Text(String::from("blue")),
+        SpreadsheetCell::Float(10.12),
+    ];
+```
+
+顺带一提，可以使用 `Vec::pop()` 方法来移除并返回最后一个元素.
+
+:::tip
+:::spoi 关于向量使用的小技巧
+1. 下面这个程序会出现所有权问题，如果代码能够通过编译，那一旦第一个元素非 `0`，只要经过一次 `shrink_to_fit`，`v.iter()` 就会失效（注意这里是倒序的）.
+
+    ```rust
+    /// Removes all the zeros in-place from a vector of integers.
+    fn remove_zeros(v: &mut Vec<i32>) {
+        for (i, t) in v.iter().enumerate().rev() {
+            if *t == 0 {
+                v.remove(i);
+                v.shrink_to_fit();
+            }
+        }
+    }
+    ```
+    
+    改进方法比较巧妙，由于是倒序的，所以删除后面的元素不会影响前面元素的索引：
+    
+    ```rust
+    fn remove_zeros(v: &mut Vec<i32>) {
+        for i in (0 .. v.len()).rev() {
+            if v[i] == 0 {
+                v.remove(i);
+                v.shrink_to_fit();
+            }
+        }
+    }
+    ```
+
+2. 下面这个程序理论上来说是安全的，但是会引起编译错误：
+
+    ```rust
+    fn reverse(v: &mut Vec<String>) {
+        let n = v.len();
+        for i in 0 .. n / 2 {
+            let p1 = &mut v[i] as *mut String;
+            let p2 = &mut v[n - i - 1] as *mut String;
+            unsafe { std::ptr::swap_nonoverlapping(p1, p2, 1); }
+        }
+    }
+    ```
+
+    为了改进，我们只能使用 `unsafe` 块，这里是一个安全的用法：
+
+    ```rust
+    fn reverse(v: &mut Vec<String>) {
+        let n = v.len();
+        for i in 0 .. n / 2 {
+            let p1 = &mut v[i] as *mut String;
+            let p2 = &mut v[n - i - 1] as *mut String;
+            unsafe { std::ptr::swap_nonoverlapping(p1, p2, 1); }
+        }
+    }
+    ```
+:::
+
+### 使用 String 来储存 UTF-8 编码文本
+
+`String` 被实现为 bytes 的集合，在 Rust 中 *string (字符串)* 这一术语通常表示唯一的一种字符串类型——字符串切片 `str`，且常见于其借用形式 `&str`. 我们前面提到，**字符串切片是对储存在其他地方的 UTF-8 编码字符串数据的引用**. 比如，字符串字面量被储存在程序的二进制文件中，因此他们也是字符串切片.
+
+而 `String` 则是一种由 Rust 标准库提供的但并非编码在核心语言中的，可增长、可变、可被拥有的 UTF-8 编码字符串类型. 当 Rust 开发者提到 “*strings*” 这一术语时，他们可能指的是 `String` 或字符串切片 `&str`，而不仅仅是其中之一.
+
+`String` 的一些基本语法见下：
+
+```rust
+// 创建空的 String
+let mut s = String::new();
+
+// 字符串切片转 String
+// to_string 在任何实现了 Display 特性的类型上都可以使用
+let data = "initial contents";
+let s = data.to_string();
+
+let s = "foo".to_string();
+let s = String::from("foo");
+
+// 追加字符串
+s.push_str("bar");    // s => "foobar"
+// 追加字符
+s.push('l');
+
+// 拼接字符串
+let s1 = String::from("Hello, ");
+let s2 = String::from("world!");
+let s3 = s1 + &s2; // s1 被移动
+
+// 同时拼接多个字符串，第一个字符串被移动
+let s1 = String::from("tic");
+let s2 = String::from("tac");
+let s3 = String::from("toe");
+
+let s = s1 + "-" + &s2 + "-" + &s3;
+// 使用 format
+let s = format!("{s1}-{s2}-{s3}");
+```
+
+要解释为什么*拼接字符串*一例中 `s1` 被移动，为什么 `s2` 要使用引用，都与 `+` 运算符调用的函数签名有关：
+
+```rust
+fn add(self, s: &str) -> String {
+```
+
+注意，这里 `&s2` 的类型是 `&String`，但是在传入方法时被 Rust 进行了强制类型转换.
+
+:::tip
+Rust 中一个 `char` 占用 4 字节，表示 Unicode 标量，所以我们可以直接 `push` 中文字符.
+:::
+
+#### Rust 不支持 String 索引
+
+一个 `String` 实际上是一个 `Vec<u8>` 的包装，这意味着，对于 `String::from("Здравствуйте")`，其长度将是反直觉的 $24$，因为这个字符串中的每个 Unicode 标量需要 2 个字节的存储空间.
+
+因此，Rust 为了防止 UTF-8 编码导致的这种可能出现的无法立即发现的错误，并没有索引的支持.
+
+从 Rust 的角度，实际上有三种看待字符串的角度：
+
+- 作为字节
+- 作为标量值
+- 作为字节簇（Grapheme Clusters）—— 最接近人类直觉的字符/字母的概念
+
+对于单词 `नमस्ते`，从字节或者说 `Vec<u8>` 的角度来看是：
+
+```rust
+[224, 164, 168, 224, 164, 174, 224, 164, 184, 224, 165, 141, 224, 164, 164,
+224, 165, 135]
+```
+
+这是计算机最终存储这些数据的方式，如果我们把他们看作 Unicode 标量即 Rust 中的 `char` 类型，那么这些字节应是这样的：
+
+```rust
+['न', 'म', 'स', '्', 'त', 'े']
+```
+
+其中的第 4 个和第 6 个是变音符号，不是字母，若我们把他们看作字符簇，那么这个单词应当由四个字母组成：
+
+```rust
+["न", "म", "स्", "ते"]
+```
+
+Rust 提供了多种解释原始字符串数据的方式，方便各种需求的实现。另外一般来说索引操作预期需要常数时间 $O(1)$，但是 `String` 需要从开头遍历来寻找每个 `UTF-8` 字符的起始字节和长度，因此无法保证这种性能，故不实现索引.
+
+#### 切片字符串
+
+从另一个角度来说，使用索引无法确定到底应该返回字节值、标量值还是字符串切片，因此，当我们使用字符串切片的时候，需要更加明确。
+
+```rust
+let hello = "Здравствуйте";
+
+let s = &hello[0..4];
+```
+
+这里 `s` 是一个 `&str`，包含字符串的前四个字节，因为我们知道这些字符都是 2 字节 UTF-8 字符，所以 `s` 是 `Зд`.
+
+如果我们再次尝试 `&hello[0..1]` (截取了一个字符的一部分字节)，Rust 会报错：
+:::spoi 报错信息
+```bash
+$ cargo run
+   Compiling collections v0.1.0 (file:///projects/collections)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
+     Running `target/debug/collections`
+
+thread 'main' panicked at src/main.rs:4:19:
+byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+:::
+
+所以切片时边界一定要对应 `UTF-8` 字符的边界.
+
+#### 字符串迭代
+
+我们可以分别通过 `.chars` 和 `.bytes()` 迭代 Unicode 字符和字节. 由于获取字符簇过于复杂，Rust 标准库并未提供支持.
+
+#### 在 Hash Maps 中存储键值对
+
+`HashMap<K, V>` 使用**哈希函数**存储类型 `K` 的键到类型 `V` 的值的映射，该函数决定了它如何将这些键和值放置在内存中。下面介绍其基本语法：
+
+```rust
+use std::collection::HashMap;
+
+let mut scores = HashMap::new();
+
+// 所有键必须同类型，所有值必须同类型
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Yellow"), 50);
+
+// get 返回的是 Option(&V)，.copied() 会返回其 Option(V)
+let score = scores.get(&String::from("Blue")).copied().unwrap_or(0);
+
+// 遍历（迭代）哈希映射中的键值对
+// 同样使用引用来防止移动 scores 中的数据
+// **迭代哈希是随机顺序进行**
+for (key, value) in &scores {
+    // -- snip --
+}
+
+// 覆盖值
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Blue"), 25);
+
+// 在键不存在时添加键值对
+// .entry() 返回 Entry<'_, K, V) 其中的 '_ 表示匿名生命周期
+// Entry::or_insert() 的定义是：如果对应的 Entry 键存在，则返回该键的值的一个可变引用，如果不存在，则将参数作为此键的新值插入，并返回新值的一个可变引用。
+scores.entry(String::from("Blue")).or_insert(50);
+
+// 基于旧值更新值
+let text = "hello world wonderful world";
+let mut map = HashMap::new();
+
+for word in text.split_whitespace() {
+    let count = map.entry(word).or_insert(0);
+    *count += 1;
+}
+
+for (key, value) in map {
+    println!("{key}: {value}");
+}
+```
+
+#### Hash Maps 与 所有权
+
+对于实现了 `Copy` 特性的类型，其值会被赋值到哈希映射中，对于未实现的类型，其值会被移动，哈希映射将会拥有这些值. 为了在插入后仍然拥有这些值，我们可以插入值的引用，这就要求了引用的值必须在哈希映射有效期间保持有效，这就涉及到了生命周期的内容.
+
+#### Hashing Functions (哈希函数)
+
+默认情况下， HashMap 使用一种名为 SipHash 的哈希函数，该函数可以提供对涉及哈希表的拒绝服务（DoS）攻击的防护 1 。这不是最快的哈希算法，但性能下降所带来的安全性提升的权衡是值得的。如果你分析代码后发现默认的哈希函数对于你的用途来说太慢了，你可以通过指定不同的哈希器来切换到另一个函数。哈希器是一种实现了 BuildHasher 特性的类型。我们将在第 10 章讨论特性以及如何实现它们。你不必一定从零开始实现自己的哈希器；crates.io 上有其他 Rust 用户共享的库，提供了实现许多常见哈希算法的哈希器。
+
+## 错误处理
+
+Rust 将错误分为两大类：**可恢复错误**和**不可恢复错误**。对于可恢复错误，例如文件未找到错误，我们通常只想向用户报告问题并重试操作。不可恢复错误总是错误的症状，例如尝试访问数组末尾之外的地址，因此我们希望立即停止程序。
 
 ## 附录 A [21+ Rust Pro Tips](https://www.youtube.com/watch?v=53XYcpCgQWE)
 
