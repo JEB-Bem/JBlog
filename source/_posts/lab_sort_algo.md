@@ -6,7 +6,6 @@ categories: WriteUps
 filename: lab_sort_algo.md
 ---
 
-----
 :::impo
 本实验全部在 Linux 下进行，某些代码可能无法在 Windows 下正确的运行。
 :::

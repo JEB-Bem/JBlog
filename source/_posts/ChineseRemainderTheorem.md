@@ -6,7 +6,6 @@ categories: 笔记
 filename: ChineseRemainderTheorem.md
 ---
 
-----
 待完善:
 - [ ] 包含算法导论的讲义
 - [x] 包含 wikipedia 的讲义

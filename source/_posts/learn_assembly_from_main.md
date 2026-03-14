@@ -8,7 +8,6 @@ filename: learn_assembly_from_main.md
 permalink: learn_assembly_from_main.html
 ---
 
-----
 ## 编译得到的各阶段文件
 
 我们需要知道 `gcc` 是将程序分为多个阶段编译出来的，对于一个 `hello.c` 文件，它的各阶段文件可能是：

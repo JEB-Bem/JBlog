@@ -8,7 +8,6 @@ filename: hyprland_xournalpp.md
 permalink: hyprland_xournalpp.html
 ---
 
-----
 ## 安装 
 
 在 ArchLinux 下安装，其他发行版可自行前往 Github [首页](https://github.com/xournalpp/xournalpp) 查看。

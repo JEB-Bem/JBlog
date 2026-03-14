@@ -10,7 +10,6 @@ permalink: certificate-application-for-Ali4LetEnc.html
 description: 本文介绍如何使用 Certbot 向 Let's encrypt 申请证书，使用阿里云服务器。
 ---
 
-----
 本文介绍如何使用 `Certbot` 向 `Let's encrypt` 申请证书，使用阿里云服务器。
 
 ## 证书是什么？

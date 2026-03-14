@@ -6,8 +6,6 @@ categories: 笔记
 filename: to_panic_or_not_to_panic.md
 ---
 
-----
-
 > 这篇文章类似于翻译的性质，你可以直接阅读[原文](https://rust-book.cs.brown.edu/ch09-03-to-panic-or-not-to-panic.html).
 
 一般来说，返回 `Result` 是一个好的默认选择，不过，在示例、原型代码和测试等情况下，编写会 panic 的代码比返回 `Result` 更合适.

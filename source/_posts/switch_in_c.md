@@ -6,7 +6,6 @@ categories: 笔记
 filename: switch_in_c.md
 ---
 
-----
 ## 0x00 Include
 
 在 C/C++ 中，若在 `case` 块中声明变量，有一些细节需要注意。先引入问题，看下面的代码：

@@ -7,7 +7,6 @@ filename: swap_learning.md
 permalink: swap_learning.html
 ---
 
-----
 :::tip
 本文章需要用到位运算的基础知识，没有了解过的同学可以看看 [OI-Wiki](https://oi-wiki.org/math/bit/)。
 :::
