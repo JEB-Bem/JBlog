@@ -1985,13 +1985,14 @@ mod tests {
 
 当测试函数中的某些内容发生 panic 时，测试就会失败。每个测试都在一个新线程中运行，当主线程发现一个测试线程已经死亡时，该测试就会被标记为失败。运行测试的一些语法：
 
-- `cargo test` 运行默认测试；
+- `cargo test` 运行所有测试；
+- `cargo test -- --inclue-ignored` 运行所有测试，无论是否被忽略.
+- `-- --ignored` 运行标记为 `#[ignore]` 的测试；
 - `--` 分割符之后的所有参数和选项都会传递给测试二进制文件；
 - `-- --test-threads=<x>` 手动指定线程数为 $x$；
 - `-- --show-output` 在成功时也展示程序输出而不仅仅是失败时；
-- `cargo test <test_partial_name>` 运行**包含 *test_partial_name***的测试；
-- `-- --ignored` 运行标记为 `#[ignore]` 的测试；
-- `cargo test -- --inclue-ignored` 运行所有测试，无论是否被忽略.
+- `cargo test <test_partial_name>` 运行**包含** *test_partial_name* 的测试；
+- `cargo test --test <integration_test_filename>` 运行**指定**的集成测试.
 
 
 ::::note
@@ -2018,7 +2019,20 @@ Rust 还有一种测试名为基准测试，可以查看[文档](https://rust-bo
 
 Rust 社区从两个主要类别来考虑测试：单元测试和集成测试。
 - 单元测试规模小且更专注，每次独立测试一个模块，并且可以测试私有接口。其位置在 *src/* 下的每个需要测试的代码文件中（这样就方便测试私有函数接口了），惯例是在每个代码文件中创建 `tests` 模块.
-- 集成测试完全独立于你的库，以与其他外部代码相同的方式使用你的代码，仅使用公共接口，并且每个测试可能涉及多个模块。
+- 集成测试完全独立于你的库，以与其他外部代码相同的方式使用你的代码，仅使用公共接口，并且每个测试可能涉及多个模块。 集成测试在项目根目录下与 *src/* 同级的 *tests/* 目录中. 每个文件都会作为独立的 crate 编译. 举例：
+
+    ```rust
+    // tests/integration_test.rs
+    // 这里的 adder 是指目前所在的这个 crate
+    use adder::add_two;
+    
+    #[test]
+    fn it_adds_two() {
+        let result = add_two(2);
+        assert_eq!(result, 4);
+    }
+    ```
+
 :::
 
 ::::
