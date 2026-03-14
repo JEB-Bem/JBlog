@@ -1,7 +1,7 @@
 ---
 title: 关于操作系统和国际标准的一些随笔
 date: 2025/07/08 20:18:32
-tags: Linux OS
+tags:[Linux, OS]
 categories: 笔记
 filename: os_others.md
 ---

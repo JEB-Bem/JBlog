@@ -1,7 +1,7 @@
 ---
 title: mmap、pmap 与 proc
 date: 2025/07/15 20:18:32
-tags: Linux System
+tags: [Linux, System]
 categories: 笔记
 filename: address_space.md
 ---
