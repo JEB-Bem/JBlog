@@ -3,6 +3,8 @@ title: 一些思考
 date: 2026-03-14 16:00:58
 tags: 随笔
 categories: 生活
+description: 关于博客、学习节奏与技术成长的一些阶段性思考。
+keywords: 随笔, 博客, 学习, 成长, 思考
 ---
 
 ## 差距好大

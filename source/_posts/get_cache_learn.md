@@ -4,6 +4,8 @@ date: 2024/10/29 20:50:27
 tags: c/cpp
 categories: 笔记
 filename: get_cache_learn.md
+description: 从 getchar 限制题目出发，探究缓冲区与 get 类输入输出方法的相关知识。
+keywords: C语言, getchar, 缓冲区, 输入输出, 编程基础
 ---
 
 ## 0x00 前言

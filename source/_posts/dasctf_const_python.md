@@ -5,6 +5,8 @@ tags: [Web, CTF]
 categories: WriteUps
 filename: dasctf_const_python.md
 permalink: dasctf_const_python.html
+description: DASCTF 2024 const_python 题解，记录题目分析、利用思路与解题过程。
+keywords: CTF, Web, Python, Writeup, DASCTF
 ---
 
 [参考WP](https://xz.aliyun.com/news/16303)
@@ -225,4 +227,3 @@ payload = pickle.dumps(RCE())
 显然，我失败了，原因是 `__reduce__` 这个函数执行的时候 self 对象已经不存在了，也就是说其他相应的成员函数也随之被销毁了，那么可不可以把函数写在外面呢？可以，如果你的 payload 在这个文件里面被解析，当然可以，可惜你的payload是在别人的代码中执行。。。 
 
 因此，我也算是明白使用 python 官方的代码为什么会说限制很大了。。而且这个官方代码不允许嵌套调用。
-

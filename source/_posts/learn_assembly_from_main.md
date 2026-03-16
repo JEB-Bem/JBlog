@@ -6,6 +6,8 @@ tags: [Linux, ICS]
 categories: 笔记
 filename: learn_assembly_from_main.md
 permalink: learn_assembly_from_main.html
+description: 从 main 函数的反汇编入手，理解程序编译产物、可执行文件结构与运行流程。
+keywords: 反汇编, main 函数, GCC, ELF, 程序运行
 ---
 
 ## 编译得到的各阶段文件
@@ -126,4 +128,3 @@ objdump -S -M intel,i386 hello.o
 相信大家借此能对程序的运行有更多的理解。
 
 完结撒花🎉🎉🎉
-

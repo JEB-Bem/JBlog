@@ -4,6 +4,8 @@ date: 2025/11/07 19:16:40
 tags: crypto
 categories: 笔记
 filename: ChineseRemainderTheorem.md
+description: 中国剩余定理学习笔记，记录同余方程组的基本思想、形式化描述与求解方法。
+keywords: 中国剩余定理, CRT, 数论, 同余, 密码学
 ---
 
 待完善:

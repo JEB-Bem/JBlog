@@ -4,6 +4,8 @@ date: 2024-11-06 19:32
 tags: [算法]
 categories: WriteUps
 filename: lab_sort_algo.md
+description: 排序算法实验记录，使用 C 与 Python 实现冒泡排序和快速排序并比较运行时间。
+keywords: 排序算法, 冒泡排序, 快速排序, C语言, Python
 ---
 
 :::impo

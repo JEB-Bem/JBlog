@@ -5,6 +5,7 @@ tags: Rust
 categories: 笔记
 filename: Rust_notes.md
 description: Rust Programming Language 的相关笔记.
+keywords: Rust, 所有权, 结构体, Rust 学习, 编程语言
 ---
 
 > - 本笔记适用于有其他语言基础的人群使用.

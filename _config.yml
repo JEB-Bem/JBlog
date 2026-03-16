@@ -5,8 +5,8 @@
 # Site
 title: 星潮星屿
 subtitle: 'Less is More'
-description: ''
-keywords:
+description: '在 AI 降临的时代坚持古法编程，记录系统与底层、密码学、Rust 与 Linux 折腾中的笔记、题解和造轮子实践。'
+keywords: 系统, 底层, 密码学, Rust, Linux, 编程, CTF
 author: JEB_Bem
 language: zh-cn
 timezone: 'Asia/Shanghai'

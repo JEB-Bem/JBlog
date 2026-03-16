@@ -4,6 +4,8 @@ date: 2025/05/28 22:51:20
 tags: c/cpp
 categories: 笔记
 filename: switch_in_c.md
+description: 讨论 C 与 C++ 中 switch 语句里的变量声明问题，以及相关编译错误的原因。
+keywords: C语言, C++, switch, 变量声明, 编译错误
 ---
 
 ## 0x00 Include
@@ -195,4 +197,3 @@ int x = 42;
 所以肯定会编译失败了。
 
 [^1]: [Why can't vraiables be declared in a swtich statement?](https://stackoverflow.com/questions/92396/why-cant-variables-be-declared-in-a-switch-statement)
-

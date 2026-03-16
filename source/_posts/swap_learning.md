@@ -5,6 +5,8 @@ tags: [c/cpp, 算法]
 categories: 笔记
 filename: swap_learning.md
 permalink: swap_learning.html
+description: 从异或的基本性质出发，分析位运算实现 swap 的原理、写法与注意事项。
+keywords: 位运算, XOR, swap, C语言, 算法
 ---
 
 :::tip

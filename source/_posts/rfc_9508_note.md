@@ -6,6 +6,8 @@ tags: Web
 categories: 笔记
 filename: rfc_9508_note.md
 permalink: rfc_9508_note.html
+description: RFC 9508 OpenPGP 学习笔记，持续整理数据格式、功能设计与协议细节。
+keywords: OpenPGP, RFC 9508, 密码学, 协议, 标准
 ---
 
 本文讨论的内容：
@@ -299,4 +301,3 @@ Argon2 是标准的建议实现，因为 Iterated and Salted S2K 不提供 memor
 OpenPGP 可以在消息开头创建一个对称密钥加密会话密钥 (SKESK) 包。这用于允许 S2K 规范器用于密码转换，或创建混合 SKESK 包和 PKESK 包的消息。从而让我们能使用密码或公钥对来解密消息。
 
 ## 数据包语法 - Packet Syntax
-

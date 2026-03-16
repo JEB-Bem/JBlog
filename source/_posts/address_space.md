@@ -4,6 +4,8 @@ date: 2025/07/15 20:18:32
 tags: [Linux, System]
 categories: 笔记
 filename: address_space.md
+description: 从 mmap、pmap 与 /proc 入手，梳理 Linux 进程地址空间与内存映射的基本机制。
+keywords: Linux, mmap, pmap, proc, 虚拟内存
 ---
 
 ## 内存中的数据段划分

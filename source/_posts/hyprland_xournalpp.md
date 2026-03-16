@@ -6,6 +6,8 @@ tags: [Linux, Hyprland]
 categories: 教程
 filename: hyprland_xournalpp.md
 permalink: hyprland_xournalpp.html
+description: Hyprland 下使用 Xournal++ 的笔记方案，包含安装、数位板配置与菜单显示问题处理。
+keywords: Hyprland, Xournal++, Linux, 数位板, Arch Linux
 ---
 
 ## 安装 
