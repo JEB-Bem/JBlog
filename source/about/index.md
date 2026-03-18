@@ -19,11 +19,11 @@ tags:
 </style>
 
 <div class="about-inline">
-  <a href="/">
+  <a href="https://github.com/JEB-Bem">
     <img class="about-inline-avatar" no-lazy src="/images/avatar.png" alt="JEBem 的头像">
   </a>
   <div class="nickname">
-    <a href="/"><span style="color:#86bdf3;"><i>JEB</i></span>em</a>
+    <a href="https://github.com/JEB-Bem"><span style="color:#86bdf3;"><i>JEB</i></span>em</a>
   </div>
 </div>
 
@@ -33,4 +33,4 @@ tags:
 
 
 
-[这里](http://localhost:4000/friends/) 是我的友链（~~也不全是，还有单向的~~）
+[这里](/friends/) 是我的友链（~~也不全是，还有单向的~~）

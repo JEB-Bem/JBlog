@@ -1,7 +1,7 @@
 ---
 title: presentations
 date: 2025-11-29 17:21:27
-type: about
+type: "presentations"
 categories:
 tags:
 ---
