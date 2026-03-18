@@ -1,0 +1,47 @@
+hero:
+  title: 整理一些好用的工具
+  lead: 这些工具用过的都说好
+  eyebrow: Toolbox
+
+sections:
+  - title: 编程
+    description: 图论、编译、正则与字符画，偏向写题、验证和快速试错。
+    items:
+      - label: 编程 / 图论
+        title: Graph Editor
+        favicon: https://csacademy.com/static/icon.png
+        description: 在线搭图、拖边、调整权值和节点布局都很顺手，适合写题时快速验证图结构与样例。
+        url: https://csacademy.com/app/graph_editor/
+      - label: 编程 / ASCII 艺术
+        title: AsciiDraw
+        favicon: https://asciidraw.puppylab.org/favicon.ico
+        description: 适合快速画终端风格结构图、流程草图和 README 里的字符图，不用本地装额外工具。
+        url: https://asciidraw.puppylab.org/
+      - label: 编程 / 正则
+        title: 正则表达式在线测试
+        favicon: https://www.jyshare.com/favicon.ico
+        description: 快速试错、替换、验证常见表达式时很方便，适合处理文本清洗和前端匹配规则。
+        url: https://www.jyshare.com/front-end/854/
+      - label: 编程 / 编译
+        title: Compiler Explorer
+        favicon: https://godbolt.org/favicon.ico
+        description: 看不同编译器、不同优化等级下的汇编输出几乎是必备工具，写 C/C++、Rust 和汇编时都很好用。
+        url: https://godbolt.org/
+
+  - title: 设计
+    description: 主要用来处理颜色系统与界面配色，适合做快速视觉草拟。
+    items:
+      - label: 设计 / 配色
+        title: Eva Colors
+        favicon: https://colors.eva.design/favicon.ico
+        description: 可以快速生成和预览成体系的颜色层级，做浅色系 UI 或整理品牌色时尤其省时间。
+        url: https://colors.eva.design/
+
+  - title: 数学
+    description: 用于公式推导、符号计算和结果校验，适合做辅助验证。
+    items:
+      - label: 数学 / 计算
+        title: Wolfram|Alpha
+        favicon: https://www.wolframalpha.com/favicon.ico
+        description: 适合做符号计算、函数分析、矩阵与积分求解，也常拿来检查自己手算有没有走偏。
+        url: https://www.wolframalpha.com/
