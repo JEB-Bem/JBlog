@@ -1,16 +1,16 @@
 hero:
-  title: 整理一些好用的工具
-  lead: 这些工具用过的都说好
-  eyebrow: Toolbox
+  title: 常用工具
+  lead: 平常搜罗到的好用的工具
+  eyebrow: ""
 
 sections:
   - title: 编程
-    description: 图论、编译、正则与字符画，偏向写题、验证和快速试错。
+    description: 整活/提高变成效率的一些小工具
     items:
       - label: 编程 / 图论
         title: Graph Editor
         favicon: https://csacademy.com/static/icon.png
-        description: 在线搭图、拖边、调整权值和节点布局都很顺手，适合写题时快速验证图结构与样例。
+        description: 在线搭图、拖边、调整权值和节点布局都很顺手，适合写文章时插图。
         url: https://csacademy.com/app/graph_editor/
       - label: 编程 / ASCII 艺术
         title: AsciiDraw
@@ -24,12 +24,12 @@ sections:
         url: https://www.jyshare.com/front-end/854/
       - label: 编程 / 编译
         title: Compiler Explorer
-        favicon: https://godbolt.org/favicon.ico
+        favicon: https://static.ce-cdn.net/site-logo.svg
         description: 看不同编译器、不同优化等级下的汇编输出几乎是必备工具，写 C/C++、Rust 和汇编时都很好用。
         url: https://godbolt.org/
 
   - title: 设计
-    description: 主要用来处理颜色系统与界面配色，适合做快速视觉草拟。
+    description: 平时做美工可能会用到的小工具（纯业余）
     items:
       - label: 设计 / 配色
         title: Eva Colors
@@ -38,10 +38,10 @@ sections:
         url: https://colors.eva.design/
 
   - title: 数学
-    description: 用于公式推导、符号计算和结果校验，适合做辅助验证。
+    description: ""
     items:
       - label: 数学 / 计算
-        title: Wolfram|Alpha
-        favicon: https://www.wolframalpha.com/favicon.ico
-        description: 适合做符号计算、函数分析、矩阵与积分求解，也常拿来检查自己手算有没有走偏。
-        url: https://www.wolframalpha.com/
+        title: GeoGebra
+        favicon: ""
+        description: 快速回答你的数学问题，比如 1000 以内的素数.
+        url: https://www.geogebra.org/classic?lang=zh_CN
