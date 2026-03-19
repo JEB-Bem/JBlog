@@ -80,13 +80,11 @@ $$
 :::spoi 证明
 令 $n = \Pi_{i=1}^k p_i^{e_i}$，设 $n' = \Pi_{i=1}^{k}p_i$ 根据二项式定理，有
 $$
-\Sigma_{d|n} \mu(d) = \Sigma_{d|n'} \mu(d) \tag{1}
-$$
-$$
-= \Sigma_{i=0}^k \binom{k}{i}(-1)^i \tag{2}
-$$
-$$
-= (-1 + 1)^k = [k = 0] = [n = 1] \tag{3}
+\begin{aligned}
+\Sigma_{d|n} \mu(d) &= \Sigma_{d|n'} \mu(d) \tag{1}\\
+&= \Sigma_{i=0}^k \binom{k}{i}(-1)^i \tag{2}\\
+&= (-1 + 1)^k = [k = 0] = [n = 1] \tag{3}
+\end{aligned}
 $$
 
 第 (1) 步实际上只需要想到如果 $d$ 中含有一个 $e_i > 1$ 的 $p_i$ 那么 $\mu(d) = 0$ 就很好想到了；  
@@ -112,16 +110,12 @@ $$f(n) = \Sigma_{d|n}g(d)\Leftrightarrow g(n)=\Sigma_{d|n}\mu(\frac{n}{d})f(d)$$
 :::spoi 证明
 直接验证：
 $$
-\Sigma_{d|n}\mu(\frac{n}{d})f(d)=\Sigma_{k|n}g(k)\Sigma_d[k|d|n]\mu(\frac{n}{d}) \tag{1}
-$$
-$$
-=\Sigma_{k|n}g(k)\Sigma_{d|n}[\frac{n}{d}|\frac{n}{k}]\mu(\frac{n}{d}) \tag{2}
-$$
-$$
-=\Sigma_{k|n}g(k)[\frac{n}{k} = 1] \tag{3}
-$$
-$$
-= g(n) \tag{4}
+\begin{aligned}
+\Sigma_{d|n}\mu(\frac{n}{d})f(d) &= \Sigma_{k|n}g(k)\Sigma_d[k|d|n]\mu(\frac{n}{d}) \tag{1}\\
+&= \Sigma_{k|n}g(k)\Sigma_{d|n}[\frac{n}{d}|\frac{n}{k}]\mu(\frac{n}{d}) \tag{2}\\
+&= \Sigma_{k|n}g(k)[\frac{n}{k} = 1] \tag{3}\\
+&= g(n) \tag{4}
+\end{aligned}
 $$
 
 第 (1) 步就是通过 $f(n) = \Sigma_{d|n}g(d)$ 的条件将原本式子中的 f(d) 给换掉，于是那个整除的条件就很显而易见了(需要注意的是第二个 $\Sigma$ 实际上是没有限制 $d$ 的).  
@@ -258,8 +252,10 @@ $$
 
 再定义：
 $$
-m_p = c^{d_p} \bmod{p} = c^{d + k_1(p-1)} \bmod{p} = c^d \bmod p\\
-m_q = c^{d_q} \bmod{q} = c^{d + k_2(q-1)} \bmod{q} = c^d \bmod q
+\begin{aligned}
+m_p &= c^{d_p} \bmod{p} = c^{d + k_1(p-1)} \bmod{p} = c^d \bmod p\\
+m_q &= c^{d_q} \bmod{q} = c^{d + k_2(q-1)} \bmod{q} = c^d \bmod q
+\end{aligned}
 $$
 
 :::note
@@ -289,11 +285,13 @@ x \equiv m_q \pmod{q}
 $$
 
 $$
-m = pq = N\\
-M_1 = q,\; M_2 = p\\
-M_1t_1 \equiv 1 \pmod{p} \Leftrightarrow qt_1 \equiv 1 \pmod{p}\\
-M_2t_2 \equiv 1 \pmod{q} \Leftrightarrow pt_2 \equiv 1 \pmod{q}\\
-x = m_pqt_1 + m_qpt_2
+\begin{aligned}
+m &= pq = N\\
+M_1 &= q,\; M_2 = p\\
+M_1t_1 &\equiv 1 \pmod{p} \Leftrightarrow qt_1 \equiv 1 \pmod{p}\\
+M_2t_2 &\equiv 1 \pmod{q} \Leftrightarrow pt_2 \equiv 1 \pmod{q}\\
+x &= m_pqt_1 + m_qpt_2
+\end{aligned}
 $$
 
 由此我们就实现了 CRT 加速 RSA.
@@ -319,10 +317,12 @@ $$
 若 $gcd(N_1, N_2, ... ,N_k) = 1$，那么我们可以使用 CRT，得到：
 
 $$
-M = \Pi_{i=1}^k N_1\\
-M_i = M / N_i\\
-M_it_i \equiv 1 \pmod{N_i}\\
-m^e = \Sigma_{i=1}^k c_iM_it_i + k{\Pi_{i=1}^k N_i}
+\begin{aligned}
+M &= \Pi_{i=1}^k N_1\\
+M_i &= M / N_i\\
+M_it_i &\equiv 1 \pmod{N_i}\\
+m^e &= \Sigma_{i=1}^k c_iM_it_i + k{\Pi_{i=1}^k N_i}
+\end{aligned}
 $$
 
 需要注意的是，**这个 $m^e$ 实际上只有一个解是真正的结果**，所以我们只能在 $m^e < {\Pi_{i=1}^k N_i}$ 的情况下可以通过开方来获得明文.
