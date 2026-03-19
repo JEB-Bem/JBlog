@@ -13,3 +13,9 @@ And my theme is based on [@zchengsite/hexo-theme-oranges](https://github.com/zch
 - [ ] Display the catalog with a bettr implementation.
 - [ ] Refine Github Actions especially cache some static files.
 - [ ] Cache some static files longer in browser.
+
+## Run With systemd
+
+This repo includes a ready-to-use `systemd` service for `hexo server`.
+
+See [deploy/systemd/README.md](./deploy/systemd/README.md) for install and usage details.

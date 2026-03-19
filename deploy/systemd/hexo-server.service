@@ -1,0 +1,16 @@
+[Unit]
+Description=Hexo Server for JBlog
+After=network.target
+
+[Service]
+Type=simple
+User=jebhim
+Group=jebhim
+WorkingDirectory=/home/jebhim/repos/JBlog
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/npm run server -- --host 0.0.0.0 --port 4000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
