@@ -1,0 +1,9 @@
+items:
+  - title: RFC 9508 学习笔记
+    path: /rfc_9508_note.html
+  - title: 从 main 开始学习汇编
+    path: /learn_assembly_from_main.html
+  - title: Linux 常用命令记录
+    path: /LinuxCommand.html
+  - title: Rust 学习笔记
+    path: /Rust_notes.html

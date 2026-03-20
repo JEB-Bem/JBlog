@@ -1,0 +1,22 @@
+hero:
+  enable: false
+  eyebrow: ""
+  title: ""
+  description: ""
+
+profile:
+  name: 星潮星屿
+  greeting: Welcome, this is Jeb's blog
+  description: 一个喜欢瞎捣鼓的开发者，在这里记录系统与底层、密码学、Rust、Linux 以及各种造轮子实践。
+  path: /about/
+  photo: /images/avatar.png
+
+featured:
+  title: 推荐文章
+  subtitle: 值得一看的好文章~
+  count: 6
+
+recent:
+  title: 最新文章
+  subtitle: 
+  count: 6
