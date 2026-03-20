@@ -369,7 +369,7 @@ $Memory \leftrightarrow Registers$
 
 $Memory \leftrightarrow Network$
 
-$Memory \leftrightarrow Video Card (显卡)$
+$Memory \leftrightarrow Video Card\ (\text{显卡})$
 
 There is too much memory to name every location (unlike registers).
 

@@ -28,5 +28,8 @@
     "katex": "^0.16.28",
     "markdown-it-container": "^4.0.0",
     "markdown-it-task-lists": "^2.1.1"
+  },
+  "devDependencies": {
+    "@shikijs/markdown-it": "^4.0.2"
   }
 }
