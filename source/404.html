@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 | 星潮星屿</title>
+  <meta name="description" content="你访问的页面不存在，或许已经被移动到了别处">
+  <link rel="icon" href="/images/favicon.png">
+  <style>
+    @font-face {
+      font-family: "LXGW WenKai";
+      src: url("/fonts/LXGWWenKai-Regular.woff2") format("woff2");
+      font-display: swap;
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: "Satoshi";
+      src: url("https://fonts.cdnfonts.com/s/77028/Satoshi-Regular.woff") format("woff");
+      font-display: swap;
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: "Satoshi";
+      src: url("https://fonts.cdnfonts.com/s/77028/Satoshi-Bold.woff") format("woff");
+      font-display: swap;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    :root {
+      color-scheme: light dark;
+      --bg: #ffffff;
+      --panel: rgba(255, 255, 255, 0.76);
+      --text: #24292e;
+      --text-sub: #70757f;
+      --accent: #5d8ab6;
+      --accent-soft: rgba(93, 138, 182, 0.1);
+      --border: rgba(93, 138, 182, 0.14);
+      --shadow: rgba(93, 138, 182, 0.12);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1e232d;
+        --panel: rgba(35, 43, 56, 0.82);
+        --text: #eceff4;
+        --text-sub: #aab4c3;
+        --accent: #8ab5e6;
+        --accent-soft: rgba(138, 181, 230, 0.12);
+        --border: rgba(138, 181, 230, 0.16);
+        --shadow: rgba(0, 0, 0, 0.22);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 28px;
+      background:
+        radial-gradient(circle at top left, var(--accent-soft), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(127, 127, 127, 0.08), transparent 34%),
+        var(--bg);
+      color: var(--text);
+      font-family: "LXGW WenKai", sans-serif;
+      display: grid;
+      place-items: center;
+    }
+
+    .frame {
+      width: min(100%, 1040px);
+    }
+
+    .panel {
+      position: relative;
+      overflow: hidden;
+      padding: 34px 34px 30px;
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 22px 48px var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-family: "Satoshi", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    .code {
+      margin: 0;
+      color: var(--accent);
+      font-family: "Satoshi", Arial, sans-serif;
+      font-size: clamp(72px, 16vw, 172px);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.08em;
+    }
+
+    h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(34px, 5vw, 68px);
+      line-height: 1.02;
+      font-weight: 500;
+    }
+
+    .lead {
+      max-width: 44rem;
+      margin: 0;
+      color: var(--text-sub);
+      font-size: 18px;
+      line-height: 1.9;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 15px;
+      transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+    }
+
+    .actions a.primary {
+      background: var(--accent-soft);
+    }
+
+    .actions a:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .deck {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .chip {
+      min-height: 104px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.02);
+      display: flex;
+      align-items: flex-end;
+      color: var(--text-sub);
+      font-family: "Satoshi", Arial, sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .mark {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      color: var(--text-sub);
+      font-family: "Satoshi", Arial, sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0.72;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 18px;
+      }
+
+      .panel {
+        padding: 26px 22px 22px;
+        border-radius: 26px;
+      }
+
+      .deck {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .lead {
+        font-size: 16px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions a {
+        width: 100%;
+      }
+
+      .deck {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <section class="panel">
+      <div class="mark">less is more</div>
+      <p class="eyebrow">Page Not Found</p>
+      <p class="code">404</p>
+      <h1>页面不在这里</h1>
+      <p class="lead">你访问的页面可能已经被移动、重命名，或者它从一开始就不存在. 既然已经走到这里，不如看看这些内容👇</p>
+      <nav class="actions" aria-label="404 shortcuts">
+        <a class="primary" href="/">返回首页</a>
+        <a href="/posts/">浏览文章</a>
+        <a href="/favorites/">看精选</a>
+      </nav>
+    </section>
+  </main>
+</body>
+</html>
