@@ -2,7 +2,6 @@
 title: To panic! or Not to panic!
 date: 2026/03/10 18:22:32
 tags: Rust
-categories: 笔记
 filename: to_panic_or_not_to_panic.md
 description: Rust 错误处理笔记，围绕 panic、Result、unwrap 与 expect 的使用场景展开讨论。
 keywords: Rust, panic, Result, unwrap, expect

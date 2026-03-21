@@ -3,7 +3,6 @@ title: Hyprland 下的笔记方案——使用Xournal++
 date: 2025/11/2 00:00:40
 top: false
 tags: [Linux, Hyprland]
-categories: 教程
 filename: hyprland_xournalpp.md
 permalink: hyprland_xournalpp.html
 description: Hyprland 下使用 Xournal++ 的笔记方案，包含安装、数位板配置与菜单显示问题处理。

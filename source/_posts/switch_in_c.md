@@ -2,7 +2,6 @@
 title: Switch 语句与变量声明
 date: 2025/05/28 22:51:20
 tags: c/cpp
-categories: 笔记
 filename: switch_in_c.md
 description: 讨论 C 与 C++ 中 switch 语句里的变量声明问题，以及相关编译错误的原因。
 keywords: C语言, C++, switch, 变量声明, 编译错误

@@ -4,7 +4,6 @@ date: 2025/07/08 20:18:32
 tags:
   - Linux
   - OS
-categories: 笔记
 filename: os_others.md
 description: 从 UTF-8 编码结构、Linux 信号机制到文件权限判定规则，解析操作系统中的关键细节：UTF-8 前缀编码、Ctrl+Z 挂起与 kill 信号行为，以及 Linux owner 与 group 权限的实际判定逻辑。
 keywords: 操作系统, UTF-8, Linux 信号, 文件权限, 标准

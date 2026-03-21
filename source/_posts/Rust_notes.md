@@ -2,7 +2,6 @@
 title: Rust Programming Language -- Notes
 date: 2026/02/09 21:56:49
 tags: Rust
-categories: 笔记
 filename: Rust_notes.md
 description: Rust Programming Language 的相关笔记.
 keywords: Rust, 所有权, 结构体, Rust 学习, 编程语言

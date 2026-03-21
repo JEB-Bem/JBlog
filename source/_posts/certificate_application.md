@@ -2,8 +2,10 @@
 title: Aliyun & Let's Encrypt - 申请通配符证书
 date: 2025/10/31 17:50:58
 top: true
-tags: Linux
-categories: 教程
+tags:
+  - Linux
+  - 证书
+  - Web
 github: https://github.com/JEB-Bem/JBlog/blob/master/source/_posts/certificate_application.md
 filename: certificate_application.md
 permalink: certificate-application-for-Ali4LetEnc.html

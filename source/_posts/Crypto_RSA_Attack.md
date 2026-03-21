@@ -2,7 +2,6 @@
 title: "Crypto: 针对 RSA 的攻击方法"
 date: 2025/11/06 21:16:40
 tags: crypto
-categories: 笔记
 filename: Crypto_RSA_Attack.md
 description: RSA 共模攻击与低加密指数广播攻击
 keywords: RSA, 密码学, 共模攻击, 广播攻击, 数论

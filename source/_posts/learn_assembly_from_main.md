@@ -3,7 +3,6 @@ title: 从 main() 的反汇编入手程序运行逻辑
 date: 2025/10/24 14:31:40
 top: false
 tags: [Linux, ICS]
-categories: 笔记
 filename: learn_assembly_from_main.md
 permalink: learn_assembly_from_main.html
 description: 从 main 函数的反汇编入手，理解程序编译产物、可执行文件结构与运行流程。

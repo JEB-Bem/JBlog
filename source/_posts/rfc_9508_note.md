@@ -3,7 +3,6 @@ title: RFC 9508 OpenPGP 笔记 【持续更新】
 date: 2025/10/05 23:36:58
 top: true
 tags: Web
-categories: 笔记
 filename: rfc_9508_note.md
 permalink: rfc_9508_note.html
 description: RFC 9508 OpenPGP 学习笔记，持续整理数据格式、功能设计与协议细节。

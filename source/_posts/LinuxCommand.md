@@ -2,7 +2,6 @@
 title: Linux Command 笔记
 date: 2025/06/28 18:22:32
 tags: Linux
-categories: 笔记
 filename: linux_command_notes.md
 description: Linux 命令学习笔记，记录命令行历史、快捷键与日常使用中的实用技巧。
 keywords: Linux, 命令行, Shell, 终端, 快捷键
