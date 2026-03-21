@@ -13,7 +13,7 @@ date: 2025-12-07
 <iframe
   src="./BlueWhale-Serialization/"
   width="100%"
-  height="388"
+  height="620px"
   frameborder="0"
   allowfullscreen
   referrerpolicy="no-referrer"
