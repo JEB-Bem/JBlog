@@ -1,9 +1,10 @@
+description: 这里是一些有趣的、值得一看的或是很有用文章
 items:
-  - title: RFC 9508 学习笔记
-    path: /rfc_9508_note.html
-  - title: 从 main 开始学习汇编
-    path: /learn_assembly_from_main.html
-  - title: Linux 常用命令记录
-    path: /LinuxCommand.html
-  - title: Rust 学习笔记
-    path: /Rust_notes.html
+  - title: Files are hard
+    path: https://danluu.com/file-consistency/
+  - title: Makefile Cookbook
+    path: https://makefiletutorial.com/#makefile-cookbook
+  - title: Reading C type declarations
+    path: http://unixwiz.net/techtips/reading-cdecl.html
+  - title: Jyy's Letter
+    path: https://jyywiki.cn/Letter.md
