@@ -1,6 +1,7 @@
 ---
-title: {{ title }}
+title: 
 date: {{ date }}
-tags:
-categories:
+tags: 
+filename: {{title}}.md
+description: 
 ---
