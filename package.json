@@ -14,7 +14,6 @@
   "dependencies": {
     "@renbaoshuo/markdown-it-katex": "^2.0.2",
     "hexo": "^8.1.1",
-    "hexo-footnotes": "^1.0.2",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",
     "hexo-generator-feed": "^4.0.0",
@@ -26,7 +25,7 @@
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0",
     "hexo-theme-landscape": "^1.0.0",
-    "katex": "^0.16.40",
+    "katex": "^0.16.28",
     "markdown-it-container": "^4.0.0",
     "markdown-it-task-lists": "^2.1.1"
   },
