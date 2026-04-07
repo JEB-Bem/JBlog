@@ -2,7 +2,7 @@
 
 const md = require('markdown-it')({
   html: true,
-});
+}).use(require('@renbaoshuo/markdown-it-katex'));
 
 function renderFootnotes(text) {
   const footnotes = [];
