@@ -69,7 +69,7 @@ $$
 **重要性质**  
 对于 $n\in\mathbb{N^+}$，有
 $$
-\Sigma_{d|n}u(d)=[n=1]=
+\sum_{d|n}u(d)=[n=1]=
 \begin{cases}
 1, & n = 1,\\
 0, & n \neq 1.
@@ -80,8 +80,8 @@ $$
 令 $n = \Pi_{i=1}^k p_i^{e_i}$，设 $n' = \Pi_{i=1}^{k}p_i$ 根据二项式定理，有
 $$
 \begin{aligned}
-\Sigma_{d|n} \mu(d) &= \Sigma_{d|n'} \mu(d) \tag{1}\\
-&= \Sigma_{i=0}^k \binom{k}{i}(-1)^i \tag{2}\\
+\sum_{d|n} \mu(d) &= \sum_{d|n'} \mu(d) \tag{1}\\
+&= \sum_{i=0}^k \binom{k}{i}(-1)^i \tag{2}\\
 &= (-1 + 1)^k = [k = 0] = [n = 1] \tag{3}
 \end{aligned}
 $$
@@ -105,21 +105,21 @@ $$
 
 :::note
 设 $f(n),\;g(n)$ 是两个数论函数，那么有  
-$$f(n) = \Sigma_{d|n}g(d)\Leftrightarrow g(n)=\Sigma_{d|n}\mu(\frac{n}{d})f(d)$$
+$$f(n) = \sum_{d|n}g(d)\Leftrightarrow g(n)=\sum_{d|n}\mu(\frac{n}{d})f(d)$$
 :::spoi 证明
 直接验证：
 $$
 \begin{aligned}
-\Sigma_{d|n}\mu(\frac{n}{d})f(d) &= \Sigma_{k|n}g(k)\Sigma_d[k|d|n]\mu(\frac{n}{d}) \tag{1}\\
-&= \Sigma_{k|n}g(k)\Sigma_{d|n}[\frac{n}{d}|\frac{n}{k}]\mu(\frac{n}{d}) \tag{2}\\
-&= \Sigma_{k|n}g(k)[\frac{n}{k} = 1] \tag{3}\\
+\sum_{d|n}\mu(\frac{n}{d})f(d) &= \sum_{k|n}g(k)\sum_d[k|d|n]\mu(\frac{n}{d}) \tag{1}\\
+&= \sum_{k|n}g(k)\sum_{d|n}[\frac{n}{d}|\frac{n}{k}]\mu(\frac{n}{d}) \tag{2}\\
+&= \sum_{k|n}g(k)[\frac{n}{k} = 1] \tag{3}\\
 &= g(n) \tag{4}
 \end{aligned}
 $$
 
-第 (1) 步就是通过 $f(n) = \Sigma_{d|n}g(d)$ 的条件将原本式子中的 f(d) 给换掉，于是那个整除的条件就很显而易见了(需要注意的是第二个 $\Sigma$ 实际上是没有限制 $d$ 的).  
-第 (2) 步就是一个命题的等价了，注意此时的 $\Sigma$ 是有限制 $d|n$ 的.  
-第 (3) 步利用了前面的重要性质。  
+第 (1) 步就是通过 $f(n) = \sum_{d|n}g(d)$ 的条件将原本式子中的 f(d) 给换掉，于是那个整除的条件就很显而易见了(需要注意的是第二个 $\sum$ 实际上是没有限制 $d$ 的).  
+第 (2) 步就是一个命题的等价了，注意此时的 $\sum$ 是有限制 $d|n$ 的.  
+第 (3) 步利用了前面的重要性质.  
 第 (4) 步是因为 $[\frac{n}{k} = 1]$ 不为 0 的唯一取值就是 $k = n$
 
 其中 $k|d|n$ 仍然是一个命题，表示 $k|d$ 且 $d|n$
@@ -127,11 +127,11 @@ $$
 
 下面给出欧拉函数在莫比乌斯反演的应用：
 
-欧拉函数 $\phi(n)$ 满足 $n = \Sigma_{d|n}\phi(d)$，那么 $\phi(n) = \Sigma_{d|n}\mu(\frac{n}{d})d$
+欧拉函数 $\phi(n)$ 满足 $n = \sum_{d|n}\phi(d)$，那么 $\phi(n) = \sum_{d|n}\mu(\frac{n}{d})d$
 
 :::note
 :::spoi 欧拉函数性质的证明
-上面提到 $n = \Sigma_{d|n}\phi(d)$  
+上面提到 $n = \sum_{d|n}\phi(d)$  
 后补充
 :::
 
@@ -320,7 +320,7 @@ $$
 M &= \Pi_{i=1}^k N_1\\
 M_i &= M / N_i\\
 M_it_i &\equiv 1 \pmod{N_i}\\
-m^e &= \Sigma_{i=1}^k c_iM_it_i + k{\Pi_{i=1}^k N_i}
+m^e &= \sum_{i=1}^k c_iM_it_i + k{\Pi_{i=1}^k N_i}
 \end{aligned}
 $$
 
