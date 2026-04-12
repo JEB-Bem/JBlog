@@ -5,19 +5,22 @@ top: false
 tags: [Linux, Hyprland]
 filename: hyprland_xournalpp.md
 permalink: hyprland_xournalpp.html
-description: Hyprland 下使用 Xournal++ 的笔记方案，包含安装、数位板配置与菜单显示问题处理。
+description: Hyprland 下使用 Xournal++ 的笔记方案，包含安装、数位板配置与菜单显示问题处理.
 keywords: Hyprland, Xournal++, Linux, 数位板, Arch Linux
 ---
 
-## 安装 
 
-在 ArchLinux 下安装，其他发行版可自行前往 Github [首页](https://github.com/xournalpp/xournalpp) 查看。
+在 ArchLinux 下安装，其他发行版可自行前往 Github [首页](https://github.com/xournalpp/xournalpp) 查看.
 
 ```bash
 pacman -S xournalpp
 ```
 
 ## 数位板配置
+
+:::tip
+Edit（2026-03-23): 你可以在 `tablet` 中添加 `output = current` 选项来自动切换显示器.
+:::
 
 > 如果你的数位板一切正常，请跳过这一步
 
@@ -26,10 +29,12 @@ pacman -S xournalpp
 ```script
     tablet {
         transform = 1
+        # 这个选项自动切换显示器，建议添加
+        output = current
     }
 ```
 
-只需要将上面这一行放到 hyprland 配置文件的 input 块里面，hyprland 就会将所有 tablet,即平板/数位板等触摸输入设备的方向旋转 90 度。如果想单独针对一个设备，请自行查阅 hyprland 的 wiki，不保证一定成功。
+只需要将上面这一行放到 hyprland 配置文件的 input 块里面，hyprland 就会将所有 tablet,即平板/数位板等触摸输入设备的方向旋转 90 度. 如果想单独针对一个设备，请自行查阅 hyprland 的 wiki，不保证一定成功.
 
 ## xournal++ 下拉菜单不显示
 
