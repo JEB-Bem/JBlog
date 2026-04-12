@@ -18,9 +18,9 @@ jobs:
         with:
           submodules: true   # 可能主题也是一个 Git 仓库，需要继续拉取
 
-      - name: Check remote host connectivity use ICMP
-        run: |
-          ping -c 4 "${{ secrets.SERVER_DOMAIN }}" > /dev/null 2>&1
+      # - name: Check remote host connectivity use ICMP
+      #   run: |
+      #     ping -c 4 "${{ secrets.SERVER_DOMAIN }}" > /dev/null 2>&1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
