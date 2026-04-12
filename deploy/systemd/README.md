@@ -7,7 +7,7 @@
 把服务文件复制到系统目录：
 
 ```bash
-sudo cp /home/jebhim/repos/JBlog/deploy/systemd/hexo-server.service /etc/systemd/system/
+sudo cp deploy/systemd/hexo-server.service /etc/systemd/system/
 ```
 
 重新加载 `systemd` 配置并设置开机自启：
@@ -47,5 +47,6 @@ sudo systemctl stop hexo-server.service
 
 - 服务监听在 `0.0.0.0:4000`
 - 运行用户是 `jebhim`
-- 工作目录固定为 `/home/jebhim/repos/JBlog`
+- 工作目录固定为 `/home/user/repos/JBlog`
 - 依赖仓库内现有的 `node_modules`
+

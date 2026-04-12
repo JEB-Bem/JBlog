@@ -4,12 +4,12 @@ After=network.target
 
 [Service]
 Type=simple
-User=jeb
-Group=jeb
-WorkingDirectory=/home/jeb/repos/JBlog
+User=user
+Group=user
+WorkingDirectory=/path/to/JBlog
 Environment=NODE_ENV=production
-ExecStartPre=/home/jeb/.nvm/versions/node/v24.14.0/bin/node /home/jeb/repos/JBlog/node_modules/hexo/bin/hexo clean
-ExecStart=/home/jeb/.nvm/versions/node/v24.14.0/bin/node /home/jeb/repos/JBlog/node_modules/hexo/bin/hexo server --host 0.0.0.0 --port 4000
+ExecStartPre=/path/to/node /path/to/hexo clean
+ExecStart=/path/to/node /path/to/hexo server --host 0.0.0.0 --port 4000
 Restart=on-failure
 RestartSec=5
 
