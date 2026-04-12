@@ -22,6 +22,9 @@ jobs:
       #   run: |
       #     ping -c 4 "${{ secrets.SERVER_DOMAIN }}" > /dev/null 2>&1
 
+      - name: Get Github Action host ip
+        run: curl ipinfo.io/ip
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
