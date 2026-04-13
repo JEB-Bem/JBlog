@@ -86,7 +86,9 @@ meta_generator: true
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
 ## updated_option supports 'mtime', 'date', 'empty'
-updated_option: 'mtime'
+## Use front matter `date` instead of file mtime, because deploy/upload can
+## normalize mtimes and make every post look like it was updated together.
+updated_option: 'date'
 
 # Pagination
 ## Set per_page to 0 to disable pagination
