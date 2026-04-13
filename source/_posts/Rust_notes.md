@@ -2149,8 +2149,6 @@ pub trait Iterator {
 // 使用示例
 let v = vec![1, 2, 3];
 let mut v1_iter = v.iter();  // 必须 mutable
-
-// 返回的是 &Some(1)，尽管我们很少使用，但这里的 &u32 是一个引用类型
 assert_eq!(v1_iter.next(), Some(&1));
 
 // 转移所有权给迭代器
