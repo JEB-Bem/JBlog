@@ -2077,6 +2077,7 @@ println!("After calling closure: {list:?}");
 `Option<T>.unwrap_or_else` 和 `Result<T, E>.unwrap_or_else` 对于闭包的要求：
 - `Option`: 要求传入的闭包必须返回 `T` 类型的值，且不传入参数.
 - `Result`: 要求传入的闭包必须返回 `T` 类型的值，且参数类型为 `E`.
+
 ::: spoi 英语小课堂
 ~~为什么编程笔记会记这种东西呢...~~
 
@@ -2088,7 +2089,157 @@ println!("After calling closure: {list:?}");
 :::
 ::::
 
+### 闭包——移出捕获的值与 `Fn` 特性
 
+根据闭包处理捕获到的变量的方式，可以实现以下的一个或多个 `Fn` 特质：
+
+1. `FnOnce`（**所有闭包都实现了这个特性**）：实现该特性的闭包至少能被调用一次，不保证能被调用多次，那些会将捕获到的值移出 body 的闭包只会实现这个特性；
+2. `FnMut`: 实现该特性的闭包不会将捕获到的值移出，但可能修改捕获到的变量. 这类闭包可以被多次调用；
+3. `Fn`: 实现该特性的闭包既不移出也不修改捕获到的变量，或根本不捕获变量. 这些闭包也可以被多次调用，尤其在不能改变环境的情况下.
+
+由于闭包可以被看作变量，所以我们在函数参数中可以像普通参数一样进行特性的约束. 下面是一个要求使用 `FnMut` 但传入只实现了 `FnOnce` 特性的闭包会引发错误的示例：
+
+```rust
+let mut list = [
+    Rectangle { width: 10, height: 1 },
+    Rectangle { width: 3, height: 5 },
+    Rectangle { width: 7, height: 12 },
+];
+
+// 下面这个代码是虚构、复杂且无效的，只是为了演示
+let mut sort_operations = vec![];
+let value = String::from("closure called");
+
+list.sort_by_key(|r| {
+    // 第一次调用闭包时会直接移出 value 的所有权给 sort_operations
+    // 第二次调用时环境中不再存在（拥有）value 的所有权
+    sort_operations.push(value);
+    r.width
+});
+
+// 正确的实现方法（下面的闭包实现了 FnOnce 和 FnMut，未实现 Fn）：
+let mut num_sort_operations = 0;
+list.sort_by_key(|r| {
+    num_sort_operations += 1;
+    r.width
+})
+println!("{list:#?}");
+```
+
+:::impo
+如果我们不需要从环境中捕获值，我们可以选择直接传入函数而不是闭包. 例如，我们需要 `Option<Vec<T>>.unwrap_or_else` 在值为 `None` 时返回一个空向量，我们可以直接使用 `unwrap_or_else(Vec::new)`. 编译器会自动为函数定义实现适用的 `Fn` 特性.
+:::
+
+### 使用迭代器处理一系列数据
+
+迭代器负责实现遍历每个项的逻辑，并确定序列何时结束. 迭代器是惰性的，这意味着在调用消费（consume）迭代器的方法之前它们不会做任何事情. 迭代器的使用很广泛，典型的例子是使用 `for` 循环遍历实际上隐式地创建了一个迭代器来遍历序列.
+
+所有迭代器都实现了 `Iterator` 特性，并且这个特性定义了一个**关联类型**（以后提到），简单来说就是要求实现 `Iterator` 特性时，必须同时实现这个 `type` 类型.
+
+```rust
+// 迭代器实现的特性
+pub trait Iterator {
+    type Item;
+
+    // 每次调用返回 Item 类型，迭代结束返回 None
+    fn next(&mut self) -> Option<Self::Item>;
+    // 省略行为的默认实现
+}
+
+// 使用示例
+let v = vec![1, 2, 3];
+let mut v1_iter = v.iter();  // 必须 mutable
+
+// 返回的是 &Some(1)，尽管我们很少使用，但这里的 &u32 是一个引用类型
+assert_eq!(v1_iter.next(), Some(&1));
+
+// 转移所有权给迭代器
+let mut v2_iter = v.into_iter();
+// 得到的也是一个拥有所有权的变量
+assert_eq!(v2_iter.next(), Some(1));
+
+// 迭代可变引用
+let mut v = vec![1, 2, 3];  // 变量遮蔽
+let mut v3_iter = v.iter_mut();
+assert_eq!(v3_iter.next(), Some(&mut 1));
+```
+
+:::tip
+在 Rust 中，引用类型（如 `&T`）之间使用 `==` 比较时，默认比较的是引用指向的值是否相等，而不是引用本身的地址是否相同. 这是因为标准库为引用实现了 PartialEq，其语义等价于对引用自动解引用后再比较，即 `a: &T == b: &T` 实际比较的是 `*a == *b`. 因此像 `assert_eq!(v1_iter.next(), Some(&1));` 这样的判断，即使左侧的 `&1` 来自容器内部元素、右侧的 `&1` 是字面量引用、两者地址不同，只要它们指向的值都是 `1`，比较结果仍然成立. 如果需要比较引用是否指向同一地址，则应使用 `std::ptr::eq(a, b)`，它才进行指针级别的地址相等判断，而不是值相等判断.
+:::
+
+我在学习这一部分时发现了一个很有意思的现象，感觉可能会在实际开发中导致海森 bug. 一个简单的测试代码：
+
+```rust
+use std::any::type_name;
+
+fn print_type_of<T>(_: &T) {
+    println!("{}", type_name::<T>());
+}
+
+fn main() {
+    let v1 = vec![1, 2, 3];
+    print_type_of(&v1[0]);  // u32
+    let mut v1_iter = v1.iter();
+    assert_eq!(v1_iter.next(), Some(&1u32));
+    // let not_work_1: () = v1[0];
+    //                      ^^^^^ expected `()`, found `u32`
+
+    let v2 = vec![1, 2, 3];
+    print_type_of(&v2[0]);  // i32
+    let mut v2_iter = v2.iter();
+    assert_eq!(v2_iter.next(), Some(&1i32));
+    // let not_work_2: () = v2[0];
+    //                      ^^^^^ expected `()`, found `i32`
+
+    let v3 = vec![1, 2, 3];
+    print_type_of(&v3[0]);  // i32
+    let mut v3_iter = v3.iter();
+    // let not_work_3: () = v3[0];
+    //                      ^^^^^ expected `()`, found integer
+}
+```
+
+:::tip
+如何在 Rust 中得知一个变量的类型？Rust 提供了 `std::any::type_name` 这个泛型函数来帮助我们，需要注意的是，这些信息只能用于辅助调试的目的，正如文档所说：
+
+> This is intended for diagnostic use. The exact contents and format of the string are not specified, other than being a best-effort description of the type.
+
+当然，另一种比较简单的方法就是直接引发一个编译错误，可以试着放开上面的代码注释试试. 更多有关获知变量类型的方法，见这个[回答](https://stackoverflow.com/questions/21747136/how-do-i-print-the-type-of-a-variable-in-rust).
+:::
+
+从上面的代码可以看出，编译器会根据变量的使用来推导变量的类型，可能某些时候仅仅是因为多了一条调试语句，就让 Rust 将 Vec 的类型从原本的 `Vec<i32>` 变为 `Vec<u32>`？
+
+#### 消费迭代器的函数
+
+`Iterator` 有很多由标准库默认实现的函数. 而这些函数里又有一些调用了 `next` 函数（这就是为什么我们需要实现它），它们被称为消费型适配器（*Consuming Adapters*），比如 `sum` 方法：
+
+```rust
+#[test]
+fn iterator_sum() {
+    let v1 = vec![1, 2, 3];
+    let v1_iter = v1.iter();
+    let total: i32 = v1_iter.sum();
+    assert_eq!(total, 6);
+}
+```
+
+### 产生其他迭代器的函数
+
+迭代器适配器（*Iterator Adapters*）是在 `Iterator` 特性上定义的方法，它们不会消耗迭代器. 相反，它们通过改变原始迭代器的某些方面来产生不同的迭代器. 比如使用 `map`:
+
+```rust
+let v1: Vec<i32> = vec![1, 2, 3];
+// map 方法返回一个新的迭代器，该迭代器生成修改后的元素.
+// 这里的闭包创建了一个新的迭代器，其中向量中的每个元素都会增加 1
+// 使用前面提到的 collect 方法收集元素，得到一个新的向量（这就是
+// 在消费迭代器）. 前面提到 collect 返回的类型是需要指定的，具体
+// 来说它可以返回任何实现了 FromIterator 的类型，因此，我们这里指
+// 定 v2 是一个向量，但使用 _ 来让编译器自行推断元素类型
+let v2: Vec<_> = v1.iter().map(|x| x + 1).collect();
+// 另一种方法：
+let v2 = v1.iter().map(|x| x + 1).collect::<Vec<_>>();
+```
 
 
 
