@@ -27,6 +27,31 @@ sections:
         favicon: https://static.ce-cdn.net/site-logo.svg
         description: 看不同编译器、不同优化等级下的汇编输出几乎是必备工具，写 C/C++、Rust 和汇编时都很好用。
         url: https://godbolt.org/
+      - label: 编程 / Shell
+        title: ExplainShell
+        description: Write down a command-line to see the help text that matches each argument.
+        url: https://explainshell.com/
+      - lable: 编程 / 指针
+        title: cdecl
+        description: C gibberish to English.
+        url: https://cdecl.org/
+
+  - title: 网络
+    description: 一些网络/ Web 相关的工具
+    items:
+      - label: 网络 / HTTP
+        title: HTTP Bin
+        description: A simple HTTP Request & Response Service.
+        url: https://httpbin.org/
+      - label: 网络 / 连通性
+        title: Check Host
+        description: An online tool for checking availability of websites, servers, hosts and IP addresses. It provides domain and IP address location data from a few geolocation IP databases and whois as well.
+        url: https://check-host.net/
+      - lable: 网络 / 在线屏幕共享
+        title: Scrensy
+        description: 极其便捷的屏幕共享网站！
+        url: https://screensy.marijn.it/
+
 
   - title: 设计
     description: 平时做美工可能会用到的小工具（纯业余）
