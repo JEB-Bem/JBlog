@@ -10,3 +10,5 @@ items:
     path: https://jyywiki.cn/Letter.md
   - title: C 语言的 inline
     path: https://www.cnblogs.com/java20130726/p/3218639.html
+  - title: for loops in Rust
+    path: http://xion.io/post/code/rust-for-loop.html

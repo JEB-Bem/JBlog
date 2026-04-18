@@ -31,10 +31,14 @@ sections:
         title: ExplainShell
         description: Write down a command-line to see the help text that matches each argument.
         url: https://explainshell.com/
-      - lable: 编程 / 指针
+      - label: 编程 / 指针
         title: cdecl
         description: C gibberish to English.
         url: https://cdecl.org/
+      - label: 编程 / Git
+        title: Learn Git Branching
+        description:  A great interactive visualization of how branches work
+        url: https://learngitbranching.js.org/
 
   - title: 网络
     description: 一些网络/ Web 相关的工具
