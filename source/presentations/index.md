@@ -24,7 +24,7 @@ date: 2025-12-07
 date: 2026-04-19
 
 <iframe
-  src="./BlueWhale-DMS/"
+  src="./DMS/"
   width="100%"
   height="620px"
   frameborder="0"
