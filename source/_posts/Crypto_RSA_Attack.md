@@ -152,7 +152,7 @@ int exgcd(int a, int b, int& x, int& y) {
 }
 ```
 
-其证明见文末 [refrences](#refrences)
+其证明见文末 [references](#references)
 
 扩展欧几里得算法可以用来求解逆元，$a \pmod{m}$ 的逆元存在的充要条件是 $(a, m) = 1$.
 
@@ -330,7 +330,7 @@ $$
 
 <br/>
 
-<b id="refrences">refrences</b>  
+<b id="references">references</b>  
 算术函数 https://zh.wikipedia.org/wiki/%E7%AE%97%E8%A1%93%E5%87%BD%E6%95%B8  
 积性函数 https://zh.wikipedia.org/wiki/%E7%A9%8D%E6%80%A7%E5%87%BD%E6%95%B8  
 莫比乌斯反演 https://oi-wiki.org/math/number-theory/mobius/  

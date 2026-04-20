@@ -101,7 +101,7 @@ $$
 **下一章**：[信息论基础 - Chapter 2 离散信源及其信息测度](/information-theory-ch2.html)  
 **系列文章**：[信息论](/categories/信息论/)
 
-<b id="refrences">refrences</b>  
+<b id="references">references</b>  
 Random variable https://en.wikipedia.org/wiki/Random_variable  
 Sample space https://en.wikipedia.org/wiki/Sample_space  
 A Mathematical Theory of Communication https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf
