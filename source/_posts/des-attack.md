@@ -21,7 +21,7 @@ git clone https://github.com/JEB-Bem/DES-CBC.git
 
 如果有同学发现作业中有不合理的设计或错误，欢迎在评论区指出，如果涉及到实现细节，可以通过 QQ 联系我. 大家有任何问题，如果不涉及到实现细节，也可以在评论区提问. 我看到后会回复.
 
-PPT在[此处]()，视频在 PPT 的最后一页.
+PPT在[此处](/presentations)，视频在 PPT 的最后一页.
 
 ## Part 2
 
