@@ -7,18 +7,21 @@ sections:
   - title: 编程
     description: 整活/提高变成效率的一些小工具
     items:
-      - title: Graph Editor
+      - title: Draw.io
+        description: 各种图（👻
+        url: https://draw.io
+      - title: Csacademy
         favicon: https://csacademy.com/static/icon.png
-        description: 在线搭图、拖边、调整权值和节点布局都很顺手，适合写文章时插图。
+        description: 图论快速绘图
         url: https://csacademy.com/app/graph_editor/
       - title: Excalidraw
         favicon: https://excalidraw.com/apple-touch-icon.png
         description: 简洁美观的手绘风格流程图
         url: https://excalidraw.com/
-      - title: AsciiDraw
-        favicon: https://asciidraw.puppylab.org/favicon.ico
-        description: 适合快速画终端风格结构图、流程草图和 README 里的字符图，不用本地装额外工具。
-        url: https://asciidraw.puppylab.org/
+      - title: Ascii Flow
+        description: 快速绘制 ASCII 流程图图
+        favicon: https://asciiflow.com/public/favicon.png
+        url: https://asciiflow.com
       - title: 正则表达式在线测试
         favicon: https://www.jyshare.com/favicon.ico
         description: 快速试错、替换、验证常见表达式时很方便，适合处理文本清洗和前端匹配规则。
