@@ -1,12 +1,11 @@
 ---
-title: RFC 9508 OpenPGP 笔记 【持续更新】
+title: RFC 9580 OpenPGP 笔记 【持续更新】
 date: 2025/10/05 23:36:58
-top: true
 tags: Web
-filename: rfc_9508_note.md
-permalink: rfc_9508_note.html
-description: RFC 9508 OpenPGP 学习笔记，持续整理数据格式、功能设计与协议细节。
-keywords: OpenPGP, RFC 9508, 密码学, 协议, 标准
+filename: rfc_9580_note.md
+permalink: rfc_9580_note.html
+description: RFC 9580 OpenPGP 学习笔记，持续整理数据格式、功能设计与协议细节。
+keywords: OpenPGP, RFC 9580, 密码学, 协议, 标准
 ---
 
 本文讨论的内容：
@@ -66,7 +65,7 @@ Octet: 八位的字节，八位组
 
 MPI 的结构是：
 
-```text
+```js
 | length | value |
 ```
 
@@ -77,7 +76,7 @@ MPI 的结构是：
 
 下面是几个 MPI 的例子：
 
-```text
+```js
 [00 00]       <=> 0
 [00 01 01]    <=> 1  # [00 01] 为 2 个字节，表示实际数值的长度为 1,
                      # [01] 为实际数值
@@ -142,7 +141,7 @@ MPI 的结构是：
 
 简单 S2K 直接对字符串进行 hash 运算从而生成密钥数据。这种哈希运算如下所示：
 
-```text
+```js
 Octet 0: 0x00
 Octet 1: hash algorithm (一个 hash 算法的 ID)
 ```
@@ -155,7 +154,7 @@ Octet 1: hash algorithm (一个 hash 算法的 ID)
 在密码学中，`||` 表示拼接两个字节序列
 :::
 
-```
+```js
 # 假设 Hash(x) 能够产生长度为 20 的 hash value.
 # 我们需要的 session key 长度为 36.
 # 原始密码为 passphrase
@@ -169,7 +168,7 @@ Key = (H1 || H2) >> (36 - 20)
 
 带盐的 S2K 的 hash 运算如下所示：
 
-```text
+```js
 Octet 0:        0x01
 Octet 1:        hash algorithm
 Octets 2-9:     8-octet salt value
@@ -181,8 +180,8 @@ Octets 2-9:     8-octet salt value
 
 这种 S2K 会将每次 hash 的结果作为参数再次 Hash：
 
-```text
-Octet 0:        0x01
+```js
+Octet 0:        0x03
 Octet 1:        hash algorithm
 Octets 2-9:     8-octet salt value
 Octet 10:       count; a 1-octet coded value
@@ -208,7 +207,7 @@ count 使用下面的公式被编码为一个 1-octet 的数字：
 > Argon2 是一种现代密码学中的**密码派生函数（Password-Based Key Derivation Function, PBKDF）**，用于将人类可读的密码转化为强随机度的密钥（类似 S2K、PBKDF2、scrypt 的升级版）。
 > 它是目前被广泛认为最安全、最先进的口令哈希算法之一，并且是 Password Hashing Competition (PHC) 的最终获胜算法（2015）。
 
-```text
+```js
   Octet  0:        0x04
   Octets 1-16:     16-octet salt value
   Octet  17:       1-octet number of passes t
