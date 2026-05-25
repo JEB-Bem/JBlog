@@ -1,6 +1,6 @@
 ---
 title: 网络流算法详解
-date: 2026-03-18 15:22:40
+date: 2026/03/18 15:22:40
 tags: 算法
 description: 那些模糊的概念？伪流、预流、可行流？详细讨论网络流的相关定义及常见的一些算法.
 filename: network-flow.md

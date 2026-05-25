@@ -1,6 +1,6 @@
 ---
 filename: des-attack.md
-date: 2026-04-18 13:11:23
+date: 2026/04/18 13:11:23
 title: 现代密码学实践 - DES 穷举攻击
 tags:
 - crypto

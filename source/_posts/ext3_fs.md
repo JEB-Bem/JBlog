@@ -1,6 +1,6 @@
 ---
 title: 文件系统与 Ext3 数据日志模式
-date: 2026-03-21 16:37:04
+date: 2026/03/21 16:37:04
 tags:
   - Linux
   - FileSystem

@@ -1,6 +1,6 @@
 ---
 filename: dms-lock-dpms.md
-date: 2026-03-23 16:04:27
+date: 2026/03/23 16:04:27
 title: Hyprland + Dank Material Shell 锁屏后黑屏无法唤醒的原因与解决方案
 tags:
   - hyprland

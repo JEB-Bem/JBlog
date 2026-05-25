@@ -1,6 +1,6 @@
 ---
 filename: information-theory-ch1.md
-date: 2026-03-30 10:33:19
+date: 2026/03/30 10:33:19
 title: 信息论基础 - Chapter 2 离散信源及其信息测度
 tags:
 - Information Theory

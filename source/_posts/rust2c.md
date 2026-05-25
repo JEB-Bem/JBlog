@@ -1,6 +1,6 @@
 ---
 filename: rust2c.md
-date: 2026-04-13 18:04:56
+date: 2026/04/13 18:04:56
 title: C/C++ 指针声明与 Rust 引用声明
 tags:
 - 随笔

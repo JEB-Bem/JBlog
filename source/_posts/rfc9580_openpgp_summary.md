@@ -1,10 +1,17 @@
 ---
 title: RFC 9580 OpenPGP 笔记 (By GPT)
 date: 2026/05/22 11:22:58
-tags: Web Crypto
+tags:
+- Web
+- Crypto
 filename: rfc_9580_openpgp_summay.md
 description: RFC 9580 OpenPGP 学习笔记
-keywords: OpenPGP, RFC 9580, 密码学, 协议, 标准
+keywords:
+- OpenPGP
+- RFC 9580
+- 密码学
+- 协议
+- 标准
 ---
 
 # RFC 9580 OpenPGP 宏观学习笔记

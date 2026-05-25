@@ -1,6 +1,6 @@
 ---
 filename: information-theory-ch1.md
-date: 2026-03-26 11:36:43
+date: 2026/03/26 11:36:43
 title: 信息论基础 - Chapter 1 概论
 tags:
 - Information Theory

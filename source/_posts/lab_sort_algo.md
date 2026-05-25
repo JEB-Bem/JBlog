@@ -1,6 +1,6 @@
 ---
 title: 实验6 排序算法
-date: 2024-11-06 19:32
+date: 2024/11/06 19:32
 tags: [算法]
 categories: WriteUps
 filename: lab_sort_algo.md
