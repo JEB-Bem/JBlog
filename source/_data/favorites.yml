@@ -12,3 +12,5 @@ items:
     path: https://www.cnblogs.com/java20130726/p/3218639.html
   - title: for loops in Rust
     path: http://xion.io/post/code/rust-for-loop.html
+  - title: Booting up operating system
+    path: https://ftp.lug.ustc.edu.cn/%E6%B4%BB%E5%8A%A8/2026.04.15_Linux_Boot/
