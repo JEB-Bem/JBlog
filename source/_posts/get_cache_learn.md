@@ -128,7 +128,7 @@ void met2(){
 	char c;
 
 	printf("明文为：");
-	fflush(stdin);//清空输入缓存区内字符
+	fflush(stdout);//清空输出缓存区内字符
 	c = getchar();
 	printf("密文为：");
 	while(c != '\n'){
