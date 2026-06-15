@@ -8,11 +8,11 @@ And my theme is based on [@zchengsite/hexo-theme-oranges](https://github.com/zch
 
 - [x] Pseudo support GFM Alerts with markdown-it-container.
 - [x] Fixed todo list rendering problem.
-- [ ] Add a footnote plugin.
+- [x] Add a footnote plugin.
 - [x] Adjust the colors in dark mode.
-- [ ] Display the catalog with a bettr implementation.
+- [x] Display the catalog with a better implementation.
 - [ ] Refine Github Actions especially cache some static files.
-- [ ] Cache some static files longer in browser.
+- [x] Cache some static files longer in browser.
 
 ## Run With systemd
 
