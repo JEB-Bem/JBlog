@@ -782,7 +782,7 @@ main.rs
 
 - 模块中代码的路径（Paths）：一旦某个模块成为你的 crate 的一部分，只要符合隐私规则，你就可以使用代码的路径从该 crate 的任何其他地方引用该模块中的代码. 例如，garden vegetables 模块中的 Asparagus 类型可以在 `crate::garden::vegetables::Asparagus` 处找到.
 
-- Private vs. public: 模块中的代码默认对父模块私有，使用 `pub mod` 声明可使模块共有，要使得共有模块中的项（items）也变为共有，在其声明前使用 `pub`.
+- Private vs. public: 子模块可以访问父模块里的私有项；父模块不能访问子模块里的私有项；兄弟模块之间不能直接访问彼此的私有项.
 
 - `use` 关键字：在作用域内，`use` 关键字创建项的快捷方式，从而减少长路径的重复，其功能类似与 *C++* 中的 `using`.
 
