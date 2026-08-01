@@ -163,3 +163,20 @@ markdown:
 # mermaid
 mermaid:
   enable: true
+
+# comark (Component in Markdown) - MDC 语法支持
+# https://github.com/comarkdown/comark
+comark:
+  enable: true
+  syntax:
+    blockComponent: true    # :::card{...} 块组件
+    inlineProps: true       # {.class-name} 内联属性
+    inlineSpan: true        # [text]{.class} 内联 span
+    inlineComponent: true   # :component{...} 内联组件
+
+# UnoCSS - 按需原子 CSS 引擎
+# https://unocss.dev
+unocss:
+  enable: true
+  output: css/uno.css
+  minify: true
