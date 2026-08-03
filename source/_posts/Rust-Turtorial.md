@@ -1,6 +1,6 @@
 ---
 title: 胡言乱语之 Rust
-date: 2025/08/03 17:41:11
+date: 2026/08/03 17:41:11
 tags: Rust
 filename: Rust-Turtorial.md
 description: 在我所学过的所有语言中 Rust 可以说是最难的语言，今天随便写一点我对于这门语言的理解
@@ -18,6 +18,6 @@ keywords: Rust，设计哲学，思想，phisolophy
 ## Undefined Behavior
 
 <b id="references">references</b>  
-Rust Programing Language(Brown University Forked Version) https://rust-book.cs.brown.edu/  
-Everything in C is undefined behavior https://blog.habets.se/2026/05/Everything-in-C-is-undefined-behavior.html
-Behavior Considered Undefined https://doc.rust-lang.org/reference/behavior-considered-undefined.html
+[Rust Programing Language(Brown University Forked Version)](https://rust-book.cs.brown.edu/)  
+[Everything in C is undefined behavior](https://blog.habets.se/2026/05/Everything-in-C-is-undefined-behavior.html)  
+[Behavior Considered Undefined](https://doc.rust-lang.org/reference/behavior-considered-undefined.html)
