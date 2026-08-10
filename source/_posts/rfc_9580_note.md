@@ -1,4 +1,5 @@
 ---
+published: false
 title: RFC 9580 OpenPGP 笔记 【持续更新】
 date: 2025/10/05 23:36:58
 tags: Web

@@ -1,4 +1,5 @@
 ---
+published: false
 title: RFC 9580 OpenPGP 笔记 (By GPT)
 date: 2026/05/22 11:22:58
 tags:
