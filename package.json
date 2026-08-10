@@ -33,7 +33,7 @@
     "shiki": "^4.4.1"
   },
   "devDependencies": {
-    "@shikijs/markdown-it": "^4.2.0",
+    "@shikijs/markdown-it": "^4.4.2",
     "@unocss/extractor-mdc": "^66.7.5",
     "unocss": "^66.0.0"
   }
