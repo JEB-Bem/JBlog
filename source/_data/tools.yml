@@ -61,6 +61,9 @@ sections:
         favicon: https://colors.eva.design/favicon.ico
         description: 可以快速生成和预览成体系的颜色层级，做浅色系 UI 或整理品牌色时尤其省时间。
         url: https://colors.eva.design/
+      - title: Text to ASCII Art Generator
+        description: A fantastic ASCII Art text generator.
+        url: https://patorjk.com/software/taag
 
   - title: 数学
     description: ""
