@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "hexo generate",
+    "build": "hexo generate && node postbuild-uno.mjs",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
-    "server": "hexo server"
+    "server": "hexo server",
+    "postbuild-uno": "node postbuild-uno.mjs"
   },
   "hexo": {
     "version": "8.1.1"
@@ -28,9 +29,12 @@
     "hexo-theme-landscape": "^1.0.0",
     "katex": "^0.17.0",
     "markdown-it-container": "^4.0.0",
-    "markdown-it-task-lists": "^2.1.1"
+    "markdown-it-task-lists": "^2.1.1",
+    "shiki": "^4.4.1"
   },
   "devDependencies": {
-    "@shikijs/markdown-it": "^4.2.0"
+    "@shikijs/markdown-it": "^4.4.2",
+    "@unocss/extractor-mdc": "^66.7.5",
+    "unocss": "^66.0.0"
   }
 }
