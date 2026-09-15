@@ -16,3 +16,5 @@ items:
     path: https://ftp.lug.ustc.edu.cn/%E6%B4%BB%E5%8A%A8/2026.04.15_Linux_Boot/
   - title: Writing an OS in Rust
     path: https://os.phil-opp.com/
+  - title: "dyn*: can we make dyn sized?"
+    path: https://smallcultfollowing.com/babysteps/blog/2022/03/29/dyn-can-we-make-dyn-sized/
