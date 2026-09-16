@@ -2,7 +2,7 @@
 filename: sea-of-clouds.md
 date: 2026-09-15 15:46:41
 title: 云海
-tags: [life]
+tags: [生活]
 description: 刷到一条云海的短视频，突然想到了曾经看过的云海。
 ---
 
