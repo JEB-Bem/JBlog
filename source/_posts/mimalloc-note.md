@@ -7,6 +7,7 @@ tags:
 filename: mimalloc-note.md
 description: "Notes for Microsoft Malloc Implementation: Mimalloc —— Free List Sharding in Action"
 keywords: [OS, Memory, 内存, "Memory Allocator", "Free List Sharding"]
+indent: true
 ---
 
 本文介绍一种由微软研发的内存分配器（Memory Allocator）—— [Mimalloc](https://www.microsoft.com/en-us/research/uploads/prod/2019/06/mimalloc-tr-v1.pdf). 关于该分配器的更严谨的分析，可自行阅读原文，本文只将其作为入门 Memory Allocator 的范例来介绍，主要讲一些 Memory Allocator [常见的问题（APLAS‘19）](https://jyywiki.cn/OS/manuals/malloc-survey.pdf)和 Mimalloc 的解决方案，不讨论过于深入的 Full List，也不讨论[相关的二进制安全问题](https://blackhat.com/presentations/bh-usa-07/Ferguson/Whitepaper/bh-usa-07-ferguson-WP.pdf).
