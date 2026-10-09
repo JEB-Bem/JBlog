@@ -163,3 +163,9 @@ markdown:
 # mermaid
 mermaid:
   enable: true
+
+# hidden configuration
+hide_posts:
+  enable: true
+  filter: hidden # front matter 中的字段名称
+  noindex: true  # 防止搜索引擎收录

@@ -5,6 +5,7 @@ tags: Linux
 filename: linux_command_notes.md
 description: Linux 命令学习笔记，记录命令行历史、快捷键与日常使用中的实用技巧。
 keywords: Linux, 命令行, Shell, 终端, 快捷键
+hidden: true
 ---
 
 > 该笔记并不完善，只是半道觉得知识过多，因此开始记笔记罢了。
