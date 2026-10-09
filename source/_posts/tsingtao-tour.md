@@ -1,7 +1,7 @@
 ---
 filename: qingdao-tour.md
 date: 2026-08-06 23:00:52
-title: Tsingdao 游记
+title: Tsingtao 游记
 tags: 生活
 description: 写一篇正式一点的生活文 🥰
 ---

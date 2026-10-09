@@ -161,7 +161,7 @@ $ cargo install elfcat
 
 ### 2.4 安装 Firefox
 
-把 Mozilla 的签名公钥放进 `/etc/apt/keyrings`（`apt-key` 已被废弃，现在第三方源的公钥统一放在这个目录）：
+把 Mozilla 的签名公钥放进 `/etc/apt/keyrings`：
 
 ```bash
 $ sudo install -d -m 0755 /etc/apt/keyrings
