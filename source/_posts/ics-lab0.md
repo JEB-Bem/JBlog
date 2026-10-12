@@ -84,7 +84,7 @@ loop {
 - Linux 目前使用 [System V ABI](https://jyywiki.cn/OS/manuals/sysv-abi.pdf)，我们会使用到其规定的调用约定（Calling Conventions），可以通过 [OSDev](https://wiki.osdev.org/Calling_Conventions) 速查.
 
 :::tip
-关于汇编语言的语法风格，Linux 上存在两种：Intel 和 GNU 的 AT&T，GNU Bin utils 基本都使用的是 AT&T 风格，Intel 则是 pwndbg 的默认风格，主要区别是操作数的顺序不同，选择哪种风格属口味问题，大多数工具也都支持更换风格，留给大家自行探索.
+关于汇编语言的语法风格，比较常见的有两种：Intel 和 GNU 的 [AT&T](https://flint.cs.yale.edu/cs421/papers/x86-asm/asm.html)，GNU Bin utils 基本都使用的是 AT&T 风格，Intel 则是 pwndbg 的默认风格，主要区别是操作数的顺序不同，选择哪种风格属口味问题，大多数工具也都支持更换风格，留给大家自行探索.
 :::
 
 我们前面绘制了简单进程模型示意图（x86），接下来我们讨论得更具体一些，按照前文所述，进程的两个关键组成部分就是地址空间和寄存器了.
