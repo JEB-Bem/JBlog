@@ -31,3 +31,15 @@ date: 2026-04-19
   allowfullscreen
   referrerpolicy="no-referrer"
 ></iframe>
+
+## BlueWhale-DMS 培训
+
+date: 2026-10-16
+<iframe
+  src="./ics-intr/"
+  width="100%"
+  height="620px"
+  frameborder="0"
+  allowfullscreen
+  referrerpolicy="no-referrer"
+></iframe>
