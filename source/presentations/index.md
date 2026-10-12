@@ -8,7 +8,7 @@ tags:
 
 ## BlueWhale-Serialization 培训
 
-date: 2025-12-07
+**date**: 2025-12-07
 
 <iframe
   src="./BlueWhale-Serialization/"
@@ -21,7 +21,7 @@ date: 2025-12-07
 
 ## BlueWhale-DMS 培训
 
-date: 2026-04-19
+**date**: 2026-04-19
 
 <iframe
   src="./DMS/"
@@ -32,9 +32,12 @@ date: 2026-04-19
   referrerpolicy="no-referrer"
 ></iframe>
 
-## BlueWhale-DMS 培训
+## ICS Intr. & Lab0
 
-date: 2026-10-16
+**date**: 2026-10-16  
+**demo code** ([Lab0](/files/ics-demos/Lab0/)): Download recursively on Linux with:  
+`wget -r -np -nH --cut-dirs=2 -e robots=off --reject="index.html*" "https://chrjeb.cn/files/ics-demos/Lab0/"`
+
 <iframe
   src="./ics-intr/"
   width="100%"
