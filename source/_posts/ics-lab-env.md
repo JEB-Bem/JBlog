@@ -29,7 +29,7 @@ description: 计算机系统基础Ⅱ实验环境配置讲义
 
 #### 安装 Kubuntu 26.04
 
-我们使用一个桌面风格类似与 Windows 的 Ubuntu 系统来完成本学期的实验，你也可以自行寻找你喜欢的镜像自行安装. 这里我们提供一个虚拟机镜像，理论上来说使用我们的镜像之后，你就不再需要进行 [1.2](#1-2-工具安装与配置) 的配置. [下载链接](https://chrjeb.cn/virtualbox-Kubuntu-isc-vm.ova) 或从 QQ 群中获取 （virtualbox-Kubuntu-isc-vm.ova）
+我们使用一个桌面风格类似与 Windows 的 Ubuntu 系统来完成本学期的实验，你也可以自行寻找你喜欢的镜像自行安装. 这里我们提供一个虚拟机镜像，理论上来说使用我们的镜像之后，你就不再需要进行 [2](#2-工具安装与配置) 的配置. [下载链接](https://chrjeb.cn/virtualbox-Kubuntu-isc-vm.ova) 或从 QQ 群中获取 （virtualbox-Kubuntu-isc-vm.ova）
 
 其配置为：
 
@@ -57,7 +57,7 @@ Hardware:
 
 #### 安装 Kubuntu 26.04
 
-我们使用一个桌面风格类似与 Windows 的 Ubuntu 系统来完成本学期的实验，你也可以自行寻找你喜欢的镜像自行安装. 这里我们提供一个 Kubuntu [官网镜像](https://cdimage.ubuntu.com/kubuntu/releases/26.04.1/release/kubuntu-26.04.1-desktop-amd64.iso)，由于助教没有使用 VMware，所以你需要自行完成安装系统的步骤并跟随 [1.2](#1-2-工具安装与配置) 完成接下来的工具配置.
+我们使用一个桌面风格类似与 Windows 的 Ubuntu 系统来完成本学期的实验，你也可以自行寻找你喜欢的镜像自行安装. 这里我们提供一个 Kubuntu [官网镜像](https://cdimage.ubuntu.com/kubuntu/releases/26.04.1/release/kubuntu-26.04.1-desktop-amd64.iso)，由于助教没有使用 VMware，所以你需要自行完成安装系统的步骤并跟随 [2](#2-工具安装与配置) 完成接下来的工具配置.
 
 :::tip
 当然，你也可以选择导入 ova 文件，但你需要额外配置 VMware Tools 来使用剪贴板和共享文件夹等功能.
@@ -80,7 +80,7 @@ Location 和 Keyboard 都保持默认即可，Customize 选择 *Minimal Installa
 ## 2 工具安装与配置
 
 :::tip
-如果你已经使用了 `virtualbox-Kubuntu-isc-vm.ova`，则可以跳过本节（1.2）
+如果你已经使用了 `virtualbox-Kubuntu-isc-vm.ova`，则可以跳过本节（2）
 :::
 
 对于 Kubuntu 或其他 Ubuntu 26 发行版(bash)，使用以下命令下载我们提供的安装脚本并执行安装，脚本中部分命令需要 *root* 权限，因此需要你输入用户密码，注意输入密码时密码**可能不会**显示出来，因此看到屏幕没有动静很正常，确认密码输入完毕后回车即可.
