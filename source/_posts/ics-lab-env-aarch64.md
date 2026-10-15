@@ -37,7 +37,7 @@ description: Arm 架构下计算机系统基础Ⅱ实验环境配置补充说明
 - [下载链接1](https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/26.04.1/ubuntu-26.04.1-live-server-amd64.iso)
 - [下载链接2](https://mirrors.ustc.edu.cn/ubuntu-releases/resolute/ubuntu-26.04.1-live-server-amd64.iso)
 
-[更多国内 Ubuntu 镜像下载地址](https://mirrors.cernet.edu.cn/os/ubuntu)，可自行选择速度最快的镜像源，注意我们使用的系统是 *26.04.1(adm64,Server)*.
+[更多国内 Ubuntu 镜像下载地址](https://mirrors.cernet.edu.cn/os/ubuntu)，可自行选择速度最快的镜像源，注意我们使用的系统是 *26.04.1(amd64,Server)*.
 
 ### 2.3 创建虚拟磁盘
 
