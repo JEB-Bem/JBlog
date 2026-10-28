@@ -54,7 +54,7 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         with:
             SSH_PRIVATE_KEY: ${{ secrets.ALIYUNSECRET }}
-            ARGS: "-rlgoDzvc -i"
+            ARGS: "-rlpzvc -i --no-o --no-g --chmod=Dg+rwxs,Fg+rwX"
             SOURCE: "public/"
             REMOTE_HOST: ${{ secrets.SERVER_DOMAIN }}
             REMOTE_USER: ${{ secrets.REMOTE_USER }}
