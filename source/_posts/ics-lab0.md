@@ -7,7 +7,7 @@ description: 欢迎来到计算机系统基础Ⅱ实验
 indent: true
 ---
 
-> 本文提供[在线版本](https://chrjeb.cn/ics-lab-pre.html)，最新信息将会更新在在线版本上.
+> 本文提供[在线版本](https://chrjeb.cn/ics-lab0.html)，最新信息将会更新在在线版本上.
 
 实验环境配置参考附件***计算机系统基础Ⅱ实验环境配置.pdf***或[在线版本](/ics-lab-env.html).
 
