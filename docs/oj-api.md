@@ -52,6 +52,7 @@ Cache-Control: no-store
 {
   "score": "<span class=\"oj-orange\">Partial</span> · 20/20 pts · 2/4 passed",
   "best_score": 20,
+  "detail": "2 个测试未通过",
   "content": "<ol><li><div class=\"test-name\">test_basic</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 10 pts · 50 ms</div></li><li><div class=\"test-name\">test_single</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 10 pts · 32 ms</div></li><li><div class=\"test-name\">test_large</div><div class=\"test-meta\"><span class=\"oj-orange\">Wrong Answer</span> · 0 pts · 1203 ms</div><div class=\"test-detail\">expected 42<br>got 0</div></li><li><div class=\"test-name\">test_max</div><div class=\"test-meta\"><span class=\"oj-orange\">Time Limit</span> · 0 pts · 2000 ms</div><div class=\"test-detail\">limit 2000 ms</div></li></ol>"
 }
 ```
@@ -62,13 +63,16 @@ Cache-Control: no-store
 | --- | --- | --- | --- |
 | `score` | string / number | 是 | 顶部总分摘要。推荐返回 HTML 字符串 |
 | `best_score` | number | 否 | 历史最高分，前端显示为 `Best <value>pts` |
+| `detail` | string | 否 | 结果级描述，显示在分数下方，样式同 `.test-detail` |
 | `content` | string | 是 | 包含 `<ol>` 的 HTML 字符串 |
 
 - `score` 会直接插入页面顶部，适合返回类似 `Partial · 70/70 pts · 5/7 passed` 的摘要。
 - `best_score` 会显示为 `Best 70pts`；为空或省略时不显示。
+- `detail` 用于补充整个提交的说明，例如“2 个测试未通过”；为空或省略时不显示。
 - `content` 会直接插入结果区域，列表结构由后端自己生成。
 - 测试数量、顺序、分数、耗时都由后端计算，前端不做任何计算。
 - `best_score` 也兼容 `bestScore`、`highest_score`、`highestScore` 字段名。
+- `detail` 也兼容 `description` 字段名。
 
 ## 4. 推荐的 HTML 结构
 
@@ -89,6 +93,14 @@ Cache-Control: no-store
 ```text
 70
 ```
+
+结果级描述放在 `detail`，前端会放进 `.test-detail`，显示在分数下方：
+
+```html
+2 个测试未通过
+```
+
+需要换行时可以使用 `<br>`。
 
 ### 4.2 列表结构
 
@@ -226,6 +238,7 @@ Vary: Origin
 - [ ] 返回 `application/json; charset=utf-8`
 - [ ] `score` 返回 HTML 摘要
 - [ ] 可选返回 `best_score` 历史最高分
+- [ ] 可选返回 `detail` 结果级描述
 - [ ] `content` 返回包含 `<ol>` 的 HTML 字符串
 - [ ] 错误返回 `{ "error": "..." }`
 - [ ] 同步返回最终评测结果
@@ -243,6 +256,7 @@ curl -s 'https://chrjeb.cn/api/oj/submission?student_id=2026000000&access_token=
 {
   "score": "<span class=\"oj-orange\">Partial</span> · 70/70 pts · 5/7 passed",
   "best_score": 70,
+  "detail": "2 个测试未通过",
   "content": "<ol><li><div class=\"test-name\">test_basic</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 10 pts · 50 ms</div></li><li><div class=\"test-name\">test_single</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 10 pts · 32 ms</div></li><li><div class=\"test-name\">test_wall</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 15 pts · 78 ms</div></li><li><div class=\"test-name\">test_dead_end</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 15 pts · 61 ms</div></li><li><div class=\"test-name\">test_cycle</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 20 pts · 94 ms</div></li><li><div class=\"test-name\">test_large</div><div class=\"test-meta\"><span class=\"oj-orange\">Wrong Answer</span> · 0 pts · 1203 ms</div><div class=\"test-detail\">expected 42<br>got 0</div></li><li><div class=\"test-name\">test_max</div><div class=\"test-meta\"><span class=\"oj-orange\">Time Limit</span> · 0 pts · 2000 ms</div><div class=\"test-detail\">limit 2000 ms</div></li></ol>"
 }
 ```
