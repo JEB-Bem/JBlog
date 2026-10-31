@@ -51,13 +51,8 @@ Cache-Control: no-store
 ```json
 {
   "score": "<span class=\"oj-partial\">Partial</span> · 20/20 pts · 2/4 passed",
-  "best_score": "<span>20</span><small> / 20</small>",
-  "tests": [
-    "<div class=\"test-name\">test_basic</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 50 ms</div>",
-    "<div class=\"test-name\">test_single</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 32 ms</div>",
-    "<div class=\"test-name\">test_large</div><div class=\"test-meta\"><span class=\"oj-wrong\">Wrong Answer</span> · 0 pts · 1203 ms</div><div class=\"test-detail\">expected 42<br>got 0</div>",
-    "<div class=\"test-name\">test_max</div><div class=\"test-meta\"><span class=\"oj-time-limit\">Time Limit</span> · 0 pts · 2000 ms</div><div class=\"test-detail\">limit 2000 ms</div>"
-  ]
+  "best_score": 20,
+  "content": "<ol><li><div class=\"test-name\">test_basic</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 50 ms</div></li><li><div class=\"test-name\">test_single</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 32 ms</div></li><li><div class=\"test-name\">test_large</div><div class=\"test-meta\"><span class=\"oj-wrong\">Wrong Answer</span> · 0 pts · 1203 ms</div><div class=\"test-detail\">expected 42<br>got 0</div></li><li><div class=\"test-name\">test_max</div><div class=\"test-meta\"><span class=\"oj-time-limit\">Time Limit</span> · 0 pts · 2000 ms</div><div class=\"test-detail\">limit 2000 ms</div></li></ol>"
 }
 ```
 
@@ -66,14 +61,13 @@ Cache-Control: no-store
 | 字段 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- |
 | `score` | string / number | 是 | 顶部总分摘要。推荐返回 HTML 字符串 |
-| `best_score` | string / number | 否 | 历史最高分。只返回数值/HTML，前端会自动加“历史最高分”标签 |
-| `tests` | string[] | 是 | 子测试结果列表，每个元素是一段 HTML |
+| `best_score` | number | 否 | 历史最高分，前端显示为 `Best <value>pts` |
+| `content` | string | 是 | 包含 `<ol>` 的 HTML 字符串 |
 
 - `score` 会直接插入页面顶部，适合返回类似 `Partial · 70/70 pts · 5/7 passed` 的摘要。
-- `best_score` 会显示在总分摘要下方；为空或省略时不显示。
-- `tests` 会按数组顺序渲染，每个元素会被放进一个 `.oj-test` 列表中。
+- `best_score` 会显示为 `Best 70pts`；为空或省略时不显示。
+- `content` 会直接插入结果区域，列表结构由后端自己生成。
 - 测试数量、顺序、分数、耗时都由后端计算，前端不做任何计算。
-- `tests` 也兼容只返回一个字符串，但推荐始终返回数组。
 - `best_score` 也兼容 `bestScore`、`highest_score`、`highestScore` 字段名。
 
 ## 4. 推荐的 HTML 结构
@@ -90,42 +84,42 @@ Cache-Control: no-store
 <span class="oj-accepted">Accepted</span> · 70/70 pts · 7/7 passed
 ```
 
-历史最高分只需要返回数值或 HTML，前端会自动加上“历史最高分”标签：
+历史最高分只返回数字，前端显示为 `Best 70pts`：
 
-```html
-<span>70</span><small> / 70</small>
+```text
+70
 ```
 
-### 4.2 单个子测试
+### 4.2 列表结构
 
-每个子测试推荐使用下面的结构：
-
-```html
-<div class="test-name">test_basic</div>
-<div class="test-meta">
-  <span class="oj-accepted">Accepted</span> · 10 pts · 50 ms
-</div>
-```
-
-失败时增加 `.test-detail`：
+`content` 返回一个包含 `<ol>` 的 HTML 字符串，列表项由后端自己生成：
 
 ```html
-<div class="test-name">test_large</div>
-<div class="test-meta">
-  <span class="oj-wrong">Wrong Answer</span> · 0 pts · 1203 ms
-</div>
-<div class="test-detail">expected 42<br>got 0</div>
+<ol>
+  <li>
+    <div class="test-name">test_basic</div>
+    <div class="test-meta">
+      <span class="oj-accepted">Accepted</span> · 10 pts · 50 ms
+    </div>
+  </li>
+  <li>
+    <div class="test-name">test_large</div>
+    <div class="test-meta">
+      <span class="oj-wrong">Wrong Answer</span> · 0 pts · 1203 ms
+    </div>
+    <div class="test-detail">expected 42<br>got 0</div>
+  </li>
+  <li>
+    <div class="test-name">test_max</div>
+    <div class="test-meta">
+      <span class="oj-time-limit">Time Limit</span> · 0 pts · 2000 ms
+    </div>
+    <div class="test-detail">limit 2000 ms</div>
+  </li>
+</ol>
 ```
 
-超时：
-
-```html
-<div class="test-name">test_max</div>
-<div class="test-meta">
-  <span class="oj-time-limit">Time Limit</span> · 0 pts · 2000 ms
-</div>
-<div class="test-detail">limit 2000 ms</div>
-```
+前端会为 `.oj-tests > ol` 和其中的 `<li>` 应用列表样式，后端不需要写 CSS。
 
 ### 4.3 可用类名
 
@@ -149,7 +143,8 @@ Cache-Control: no-store
 - 只返回 HTML 片段，不要返回 `<html>`、`<head>`、`<body>`。
 - 不要返回 `<style>` 或 `<script>`。
 - 不要依赖外部 CSS 或 JavaScript。
-- 可以使用 `<div>`、`<span>`、`<code>`、`<br>`、`<strong>` 等常规标签。
+- 可以使用 `<ol>`、`<li>`、`<div>`、`<span>`、`<code>`、`<br>`、`<strong>` 等常规标签。
+- 列表结构必须由后端放在 `content` 字符串中。
 - 测试名称、错误信息、期望值等动态内容必须由后端做 HTML 转义，避免 XSS。
 
 ## 5. 空结果
@@ -178,7 +173,7 @@ Content-Type: application/json; charset=utf-8
 ```json
 {
   "score": "",
-  "tests": []
+  "content": ""
 }
 ```
 
@@ -237,7 +232,7 @@ Vary: Origin
 - [ ] 返回 `application/json; charset=utf-8`
 - [ ] `score` 返回 HTML 摘要
 - [ ] 可选返回 `best_score` 历史最高分
-- [ ] `tests` 返回 HTML 字符串数组
+- [ ] `content` 返回包含 `<ol>` 的 HTML 字符串
 - [ ] 错误返回 `{ "error": "..." }`
 - [ ] 同步返回最终评测结果
 - [ ] 不返回 CSS、`<style>` 或 `<script>`
@@ -253,15 +248,7 @@ curl -s 'https://chrjeb.cn/api/oj/submission?student_id=2026000000&access_token=
 ```json
 {
   "score": "<span class=\"oj-partial\">Partial</span> · 70/70 pts · 5/7 passed",
-  "best_score": "<span>70</span><small> / 70</small>",
-  "tests": [
-    "<div class=\"test-name\">test_basic</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 50 ms</div>",
-    "<div class=\"test-name\">test_single</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 32 ms</div>",
-    "<div class=\"test-name\">test_wall</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 15 pts · 78 ms</div>",
-    "<div class=\"test-name\">test_dead_end</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 15 pts · 61 ms</div>",
-    "<div class=\"test-name\">test_cycle</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 20 pts · 94 ms</div>",
-    "<div class=\"test-name\">test_large</div><div class=\"test-meta\"><span class=\"oj-wrong\">Wrong Answer</span> · 0 pts · 1203 ms</div><div class=\"test-detail\">expected 42<br>got 0</div>",
-    "<div class=\"test-name\">test_max</div><div class=\"test-meta\"><span class=\"oj-time-limit\">Time Limit</span> · 0 pts · 2000 ms</div><div class=\"test-detail\">limit 2000 ms</div>"
-  ]
+  "best_score": 70,
+  "content": "<ol><li><div class=\"test-name\">test_basic</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 50 ms</div></li><li><div class=\"test-name\">test_single</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 32 ms</div></li><li><div class=\"test-name\">test_wall</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 15 pts · 78 ms</div></li><li><div class=\"test-name\">test_dead_end</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 15 pts · 61 ms</div></li><li><div class=\"test-name\">test_cycle</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 20 pts · 94 ms</div></li><li><div class=\"test-name\">test_large</div><div class=\"test-meta\"><span class=\"oj-wrong\">Wrong Answer</span> · 0 pts · 1203 ms</div><div class=\"test-detail\">expected 42<br>got 0</div></li><li><div class=\"test-name\">test_max</div><div class=\"test-meta\"><span class=\"oj-time-limit\">Time Limit</span> · 0 pts · 2000 ms</div><div class=\"test-detail\">limit 2000 ms</div></li></ol>"
 }
 ```
