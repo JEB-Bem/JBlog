@@ -50,9 +50,9 @@ Cache-Control: no-store
 
 ```json
 {
-  "score": "<span class=\"oj-partial\">Partial</span> · 20/20 pts · 2/4 passed",
+  "score": "<span class=\"oj-orange\">Partial</span> · 20/20 pts · 2/4 passed",
   "best_score": 20,
-  "content": "<ol><li><div class=\"test-name\">test_basic</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 50 ms</div></li><li><div class=\"test-name\">test_single</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 32 ms</div></li><li><div class=\"test-name\">test_large</div><div class=\"test-meta\"><span class=\"oj-wrong\">Wrong Answer</span> · 0 pts · 1203 ms</div><div class=\"test-detail\">expected 42<br>got 0</div></li><li><div class=\"test-name\">test_max</div><div class=\"test-meta\"><span class=\"oj-time-limit\">Time Limit</span> · 0 pts · 2000 ms</div><div class=\"test-detail\">limit 2000 ms</div></li></ol>"
+  "content": "<ol><li><div class=\"test-name\">test_basic</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 10 pts · 50 ms</div></li><li><div class=\"test-name\">test_single</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 10 pts · 32 ms</div></li><li><div class=\"test-name\">test_large</div><div class=\"test-meta\"><span class=\"oj-orange\">Wrong Answer</span> · 0 pts · 1203 ms</div><div class=\"test-detail\">expected 42<br>got 0</div></li><li><div class=\"test-name\">test_max</div><div class=\"test-meta\"><span class=\"oj-orange\">Time Limit</span> · 0 pts · 2000 ms</div><div class=\"test-detail\">limit 2000 ms</div></li></ol>"
 }
 ```
 
@@ -75,13 +75,13 @@ Cache-Control: no-store
 ### 4.1 总分摘要
 
 ```html
-<span class="oj-partial">Partial</span> · 70/70 pts · 5/7 passed
+<span class="oj-orange">Partial</span> · 70/70 pts · 5/7 passed
 ```
 
 如果全部通过：
 
 ```html
-<span class="oj-accepted">Accepted</span> · 70/70 pts · 7/7 passed
+<span class="oj-green">Accepted</span> · 70/70 pts · 7/7 passed
 ```
 
 历史最高分只返回数字，前端显示为 `Best 70pts`：
@@ -99,20 +99,20 @@ Cache-Control: no-store
   <li>
     <div class="test-name">test_basic</div>
     <div class="test-meta">
-      <span class="oj-accepted">Accepted</span> · 10 pts · 50 ms
+      <span class="oj-green">Accepted</span> · 10 pts · 50 ms
     </div>
   </li>
   <li>
     <div class="test-name">test_large</div>
     <div class="test-meta">
-      <span class="oj-wrong">Wrong Answer</span> · 0 pts · 1203 ms
+      <span class="oj-orange">Wrong Answer</span> · 0 pts · 1203 ms
     </div>
     <div class="test-detail">expected 42<br>got 0</div>
   </li>
   <li>
     <div class="test-name">test_max</div>
     <div class="test-meta">
-      <span class="oj-time-limit">Time Limit</span> · 0 pts · 2000 ms
+      <span class="oj-orange">Time Limit</span> · 0 pts · 2000 ms
     </div>
     <div class="test-detail">limit 2000 ms</div>
   </li>
@@ -121,22 +121,16 @@ Cache-Control: no-store
 
 前端会为 `.oj-tests > ol` 和其中的 `<li>` 应用列表样式，后端不需要写 CSS。
 
-### 4.3 可用类名
+### 4.3 颜色类名
 
-| 用途 | 推荐类名 | 颜色 |
-| --- | --- | --- |
-| 通过 | `oj-accepted` / `oj-pass` | 绿色 |
-| 部分通过 | `oj-partial` | 红色 |
-| 错误 | `oj-wrong` / `oj-fail` | 红色 |
-| 超时 | `oj-time-limit` / `oj-warn` | 橙色 |
+只提供两个颜色类名，后端根据状态自行选择：
 
-子测试内部也可以使用以下兼容类名：
+| 类名 | 颜色 |
+| --- | --- |
+| `oj-green` | 绿色 |
+| `oj-orange` | 橙色 |
 
-- 通过：`pass`、`passed`、`success`、`ok`
-- 失败：`fail`、`failed`、`error`、`wrong`、`rejected`
-- 超时/警告：`time-limit`、`tle`、`warning`
-
-推荐优先使用 `oj-*` 前缀，避免和博客 Markdown 的告警块类名冲突。
+不再区分 `oj-accepted`、`oj-partial`、`oj-wrong`、`oj-time-limit` 等语义状态类。
 
 ### 4.4 HTML 限制
 
@@ -247,8 +241,8 @@ curl -s 'https://chrjeb.cn/api/oj/submission?student_id=2026000000&access_token=
 
 ```json
 {
-  "score": "<span class=\"oj-partial\">Partial</span> · 70/70 pts · 5/7 passed",
+  "score": "<span class=\"oj-orange\">Partial</span> · 70/70 pts · 5/7 passed",
   "best_score": 70,
-  "content": "<ol><li><div class=\"test-name\">test_basic</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 50 ms</div></li><li><div class=\"test-name\">test_single</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 10 pts · 32 ms</div></li><li><div class=\"test-name\">test_wall</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 15 pts · 78 ms</div></li><li><div class=\"test-name\">test_dead_end</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 15 pts · 61 ms</div></li><li><div class=\"test-name\">test_cycle</div><div class=\"test-meta\"><span class=\"oj-accepted\">Accepted</span> · 20 pts · 94 ms</div></li><li><div class=\"test-name\">test_large</div><div class=\"test-meta\"><span class=\"oj-wrong\">Wrong Answer</span> · 0 pts · 1203 ms</div><div class=\"test-detail\">expected 42<br>got 0</div></li><li><div class=\"test-name\">test_max</div><div class=\"test-meta\"><span class=\"oj-time-limit\">Time Limit</span> · 0 pts · 2000 ms</div><div class=\"test-detail\">limit 2000 ms</div></li></ol>"
+  "content": "<ol><li><div class=\"test-name\">test_basic</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 10 pts · 50 ms</div></li><li><div class=\"test-name\">test_single</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 10 pts · 32 ms</div></li><li><div class=\"test-name\">test_wall</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 15 pts · 78 ms</div></li><li><div class=\"test-name\">test_dead_end</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 15 pts · 61 ms</div></li><li><div class=\"test-name\">test_cycle</div><div class=\"test-meta\"><span class=\"oj-green\">Accepted</span> · 20 pts · 94 ms</div></li><li><div class=\"test-name\">test_large</div><div class=\"test-meta\"><span class=\"oj-orange\">Wrong Answer</span> · 0 pts · 1203 ms</div><div class=\"test-detail\">expected 42<br>got 0</div></li><li><div class=\"test-name\">test_max</div><div class=\"test-meta\"><span class=\"oj-orange\">Time Limit</span> · 0 pts · 2000 ms</div><div class=\"test-detail\">limit 2000 ms</div></li></ol>"
 }
 ```
