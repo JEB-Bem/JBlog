@@ -169,6 +169,8 @@ Normalized.  +1.9218750000 X 2^(6)
 
 完成实验后，使用 `make` 编译，确认代码没有问题后，使用 `make submit` 提交实验，OJ 开放后会返回一个查看评测结果的地址.
 
+<div class="oj-box" data-api="https://chrjeb.cn/api/submission/" course="ICS2026" module="datalab">Lab1 - DataLab</div>
+
 ### 2.4 注意事项与提示
 
 1. 若你不了解 Makefile 文件，建议每次完成编辑后使用 `make` 命令编辑；
@@ -181,3 +183,4 @@ Normalized.  +1.9218750000 X 2^(6)
 - 参考教材 《计算机系统-基于 x86+Linux 平台》
 - 参考教材 [OSTEP](https://pages.cs.wisc.edu/~remzi/OSTEP/)
 - 参考教材 CSAPP
+
