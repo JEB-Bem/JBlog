@@ -169,6 +169,10 @@ Normalized.  +1.9218750000 X 2^(6)
 
 完成实验后，使用 `make` 编译，确认代码没有问题后，使用 `make submit` 提交实验，OJ 开放后会返回一个查看评测结果的地址.
 
+:::tip
+bonus 属于加分隐藏关，优化你的 floatPower2 算法，只要足够快，就可以通过这个隐藏关.
+:::
+
 <div class="oj-box" data-api="https://chrjeb.cn/api/submission/" course="ICS2026" module="datalab">Lab1 - DataLab</div>
 
 ### 2.4 注意事项与提示
