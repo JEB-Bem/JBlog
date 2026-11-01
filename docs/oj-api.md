@@ -6,14 +6,20 @@
 
 ## 1. 前端行为
 
-- 默认请求地址：`GET /api/oj/submission`
-- 可以在文章中通过 `data-api` 覆盖：
+- 默认请求地址：`GET /api/oj/submission/`
+- 可以在文章中通过 `data-api` 覆盖，并通过 `course` / `module` 属性传课程与模块：
 
   ```html
-  <div class="oj-box" data-api="https://oj.example.com/api/submission">Lab1 - DataLab</div>
+  <div
+    class="oj-box"
+    data-api="https://oj.example.com/api/submission/"
+    course="ICS2026"
+    module="datalab"
+  >Lab1 - DataLab</div>
   ```
 
-- 前端会发送 `Accept: application/json`。
+- 前端会发送 `Accept: application/json`，并在请求头中带上 `X-Token` 和 `X-Stuid`。
+- `course` 和 `module` 也兼容 `data-course` / `data-module` 写法。
 - 用户输入 Token 和 Student ID 后，前端会防抖 400ms 再发起请求。
 - 接口需要 **同步返回最终结果**；前端当前没有轮询或异步任务查询逻辑。
 - `?mock=1` 是纯前端预览，不会请求后端。
@@ -23,18 +29,30 @@
 ### 2.1 方法和地址
 
 ```http
-GET /api/oj/submission?student_id=2026000000&access_token=xxxxx HTTP/1.1
+GET /api/oj/submission/?course=ICS2026&module=datalab HTTP/1.1
 Accept: application/json
+X-Token: xxxxx
+X-Stuid: 2026000000
 ```
 
 ### 2.2 查询参数
 
 | 参数 | 必填 | 类型 | 说明 |
 | --- | --- | --- | --- |
-| `student_id` | 是 | string | 学号 |
-| `access_token` | 是 | string | OJ Token |
+| `course` | 是 | string | 课程标识，例如 `ICS2026` |
+| `module` | 是 | string | 模块标识，例如 `datalab` |
 
-客户端会对参数做 URL 编码。后端需要校验两个参数都存在且非空。
+客户端会对参数做 URL 编码；缺少属性时不会发送对应参数。
+
+### 2.3 请求头
+
+| 请求头 | 必填 | 说明 |
+| --- | --- | --- |
+| `Accept` | 是 | 固定为 `application/json` |
+| `X-Token` | 是 | OJ Token |
+| `X-Stuid` | 是 | 学号 |
+
+后端需要校验 `X-Token`、`X-Stuid`、`course`、`module` 都存在且有效。
 
 ## 3. 成功响应
 
@@ -197,7 +215,7 @@ Content-Type: application/json; charset=utf-8
 
 | 状态码 | 场景 |
 | --- | --- |
-| `400` | 缺少 `student_id` 或 `access_token` |
+| `400` | 缺少 `course`、`module`、`X-Token` 或 `X-Stuid` |
 | `401` | Token 无效或已过期 |
 | `403` | Token 与学号不匹配 |
 | `404` | 没有找到提交记录 |
@@ -215,26 +233,27 @@ Content-Type: application/json; charset=utf-8
 ```http
 Access-Control-Allow-Origin: https://chrjeb.cn
 Access-Control-Allow-Methods: GET, OPTIONS
-Access-Control-Allow-Headers: Accept
+Access-Control-Allow-Headers: Accept, X-Token, X-Stuid
 Vary: Origin
 ```
 
-当前前端只发送 `Accept` 请求头，属于简单请求，通常不会触发预检。如果后端未来要求 `Authorization` 等自定义请求头，需要同时支持 `OPTIONS` 预检。
+由于请求带有 `X-Token` 和 `X-Stuid` 自定义请求头，跨域时会触发 `OPTIONS` 预检，后端需要正确响应预检请求。
 
 ## 8. 安全建议
 
 - 只通过 HTTPS 提供接口。
-- Token 目前通过查询参数传递，注意不要把它完整写入访问日志。
+- Token 通过 `X-Token` 请求头传递，不要写入访问日志。
 - Token 应该设置有效期，并绑定到学号。
-- 对 `student_id` 和 `access_token` 做限流，避免暴力枚举。
+- 对 `X-Token` 和 `X-Stuid` 做限流，避免暴力枚举。
 - 只返回当前 Token 对应学生的数据。
 - 所有拼接到 HTML 中的动态内容都必须转义。
 - 返回 `Cache-Control: no-store`，避免代理缓存个人评测结果。
 
 ## 9. 最小实现检查清单
 
-- [ ] 提供 `GET /api/oj/submission`
-- [ ] 接收 `student_id` 和 `access_token`
+- [ ] 提供 `GET /api/oj/submission/`
+- [ ] 接收 `course`、`module` 查询参数
+- [ ] 接收 `X-Token`、`X-Stuid` 请求头
 - [ ] 返回 `application/json; charset=utf-8`
 - [ ] `score` 返回 HTML 摘要
 - [ ] 可选返回 `best_score` 历史最高分
@@ -249,7 +268,11 @@ Vary: Origin
 ## 10. 完整请求示例
 
 ```bash
-curl -s 'https://chrjeb.cn/api/oj/submission?student_id=2026000000&access_token=test-token'
+curl -s \
+  -H 'Accept: application/json' \
+  -H 'X-Token: test-token' \
+  -H 'X-Stuid: 2026000000' \
+  'https://chrjeb.cn/api/oj/submission/?course=ICS2026&module=datalab'
 ```
 
 ```json
