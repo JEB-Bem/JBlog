@@ -39,6 +39,9 @@ sections:
       - title: Learn Git Branching
         description:  A great interactive visualization of how branches work
         url: https://learngitbranching.js.org/
+      - title: carbon
+        description: Create and share beautiful images of your source code.
+        url: https://carbon.now.sh/
 
   - title: 网络
     description: 一些网络/ Web 相关的工具

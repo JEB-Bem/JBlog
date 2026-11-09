@@ -67,7 +67,7 @@ indent: true
 
 ```bash
 $ mkdir datalab && cd datalab
-$ curl -sSLf 'https://chrjeb.cn/files/scripts/init-lab1.sh' | bash
+$ bash -c "$(curl -sSLf 'https://chrjeb.cn/files/scripts/init-lab1.sh')"
 ```
 
 看到 `Initialized Successfully` 就说明初始化成功了.
