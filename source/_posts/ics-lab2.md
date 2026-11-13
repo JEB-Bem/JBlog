@@ -134,7 +134,164 @@ char *phase_1_sol(void) {
 - 你可能需要输出一些信息来辅助调试，为了避免最后忘记删除调试语句导致 OJ 出现难以调试的错误，推荐你使用 `fprintf(stderr, "<fmt>", ...);` 函数来调试（询问 AI 其具体用法）. 为了使用这个函数，你需要 `#include <stdio.h>`.
 :::
 
-### 2.3 实验评测
+### 2.3 实验指南
+
+为了演示拆除炸弹的基本方法，我们使用一个简单的程序来模拟 bomb 程序，其源代码为：
+
+```c
+/* hello.c */
+#include <stdio.h>
+#include <stdlib.h>
+
+void explode() {
+    fprintf(stderr, "Bomb!!!\n");
+    exit(8);
+}
+
+void test(int x, int y, int numbers[]) {
+    for (int i = 0; i < 4; ++i) {
+    }
+}
+
+int main() {
+    int numbers[4] = { 0, 0, 0, 0 };
+    test(3, 2, numbers);
+    for (int i = 0; i < 4; ++i) {
+        printf("numbers[%d]: %d\n", i, numbers[i]);
+    }
+}
+```
+
+:::tip
+系列讲义讲解的所有 demo 都存在[在线目录](https://chrjeb.cn/files/ics-demos/)中，对于本次实验的 demo，你可以使用下面的命令下载：
+
+```bash
+wget -r -np -nH --cut-dirs=2 -e robots=off --reject="index.html*" \
+"https://chrjeb.cn/files/ics-demos/Lab2/"
+```
+:::
+
+然后，使用 `make clean all` 编译，这里我们使用了编译选项 `-O1`，避免 GCC 过优化导致我们读不懂函数逻辑，~~今天课上就是因为默认的 *-O2* 优化导致调试时翻车了~~.
+
+接下来尝试使用 gdb(pwndbg) 调试程序，启动 gdb (以 pwndbg 为例演示)：
+
+```bash
+$ pwndbg ./hello
+```
+
+使用 `b(reakpoint)` 命令在 `test()` 函数处打断点（假设我们已经知道校验逻辑在 test 函数中），然后使用 `r(un)/c(ontinue)` 命令开始/继续执行，直到停在 `test` 的第一条指令：
+
+```bash
+pwndbg> b test
+Breakpoint 2 at 0x555555555194
+pwndbg> c
+Continuing.
+
+Breakpoint 2, 0x0000555555555194 in test ()
+LEGEND: STACK | HEAP | CODE | DATA | WX | RODATA
+...
+```
+
+使用 `disas test` 观察反汇编代码:
+
+```bash
+Dump of assembler code for function test:
+=> 0x0000555555555194 <+0>:	imul   edi,esi
+   0x0000555555555197 <+3>:	mov    eax,0x0
+   0x000055555555519c <+8>:	lea    ecx,[rdi+rax*1]
+   0x000055555555519f <+11>:	cmp    DWORD PTR [rdx+rax*4],ecx
+   0x00005555555551a2 <+14>:	jne    0x5555555551af <test+27>
+   0x00005555555551a4 <+16>:	add    rax,0x1
+   0x00005555555551a8 <+20>:	cmp    rax,0x4
+   0x00005555555551ac <+24>:	jne    0x55555555519c <test+8>
+   0x00005555555551ae <+26>:	ret
+   0x00005555555551af <+27>:	sub    rsp,0x8
+   0x00005555555551b3 <+31>:	call   0x555555555169 <explode>
+```
+
+这里需要使用到[调用约定](https://en.wikipedia.org/wiki/Calling_convention)的知识，我们调试的程序是 x64 程序，因此可以使用 Lab0 提到的[手册](https://wiki.osdev.org/System_V_ABI)，来确认函数参数的传入方式，[这里](https://wiki.osdev.org/Calling_Conventions)还有一个比较直观的表格：
+
+![20261113-20c8c701e9820883.png](./images/20261113-20c8c701e9820883.png)
+
+由此可以确定 `test(3, 2, numbers)` 分别通过 `rdi`、`rsi`、`rdx` 三个参数传入，由此，我们可以开始分析了.
+
+注意到首先计算了 `edi = edi * esi (imul edi, esi)`，也就是 `edi = 3 * 2 = 6`，接下来，`eax = 0`，然后令 `ecx = rdi + rax * 1`，再比较 `mem(rdx + rax * 4) == ecx`，这里 `rdx` 指向 `numbers`，`rax = 0`，因此就是比较 `numbers[0] == ecx(value: 6)`，如果不相等，就跳转到 27 行，然后直接爆炸，因此要求 `numbers[0] = 6`，这样我们就推导出 `numbers[0]` 的值了.
+
+:::tip
+上面的分析中，只是令 `eax = 0`，为什么就能断定 `rax = 0` 呢？这里涉及到 x64 的一个小特性，所有的算术和逻辑指令写入 32 位**通用寄存器**会将其高 32 位置为 0，而写入 8, 16 位寄存器则没有这个性质.
+:::
+
+**下一步怎么做**？这时候有两种思路，记住 `numbers[0]` 的值是 6，然后从 `<+11>` 开始继续推；第二种思路，将 `main` 函数中的 `numbers[0]` 修改为 6，然后重新再跑一次，这里我们选择第二种.
+
+将 `main` 函数修改为如下所示：
+
+```c
+int main() {
+    int numbers[4] = { 6, 0, 0, 0 };
+    test(3, 2, numbers);
+    for (int i = 0; i < 4; ++i) {
+        printf("numbers[%d]: %d\n", i, numbers[i]);
+    }
+}
+```
+
+在另一个终端中重新 `make`，gdb(pwndbg) 会自动发现文件被修改了，因此使用 `r(un)` 就可以重新运行而不需要退出 gdb(pwndbg)，我们的断点也不需要重新打了，可以看到程序停在了 `test` 函数的位置，并且 `numbers[0]` 的值也发生了变化，pwndbg 很好的展示了这一变化（甚至贴心的告诉你跳转不会发生了）：
+
+![20261113-6715b32311f304e9.png](./images/20261113-6715b32311f304e9.png)
+
+接下来就该从 `<+11>` 继续看了，由于 `cmp` 运算后 `ZF=0`，不满足 `jne` 跳转条件，因此不会跳转，再看 `<+16>`，`rax += 1`，然后判断 `rax == 4`，如果不等于就跳转到 `<+8>`，显然 `1 != 4`，看到 `<+8>` 的 `ecx = rdi + rax = 7`，然后判断 `mem(rdx + rax * 4) == ecx(value: 7)`，也就是问 `numbers[1] == 7`，如果不等于就会爆炸，因此我们就推导出 `numbers[1] = 7`，依次类推，`numbers[2] = 8`，`numbers[3] = 9`，我们就成功逆向出了 `test` 函数的检查逻辑.
+
+到这里，相信你已经大致掌握了一些基础的 gdb 指令，再自己学一学 `x` 等命令的使用，就大概能完成本次实验了.
+
+<!--
+#### 栈
+
+这里再简单讲讲 *graph.txt*，画这个图的意义主要是方便大家梳理栈内存，下面以一个简单的程序来讲讲如何逆向栈的布局：
+
+```c
+// stack.c
+int *calc(int x) {
+    static int arr[4] = { 0 };
+    arr[x] = arr[x - 1] = 1;
+    arr[x + 1] = arr[x] + arr[x - 1] * 2;
+    arr[0] = -1;
+    return arr;
+}
+
+int main() {
+    // 说什么传递参数，其实这里只能传递一个 2 :(
+    int *arr = calc(2);
+    for (int i = 0; i < 4; ++i) {
+        printf("%d ", arr[i]);
+    }
+    return 0;
+}
+```
+-->
+
+同样使用 make 编译，然后我们开始调试，将断点打在 `calc`（具体操作不再展开）,
+
+#### GDB 的底层原理（offtopic）
+
+这里展开讲讲 GDB 的底层原理，并不要求大家掌握，在 x64 中，有这样一条特殊的指令——`INT3`，这是 GDB 断点能力的重要技术基础：
+
+> The INT3 instruction uses a one-byte opcode (CC) and is intended for calling the debug exception handler with a breakpoint exception (#BP). (This one-byte form is useful because it can replace the first byte of any instruction at which a breakpoint is desired, including other one-byte instructions, without overwriting other instructions.)
+
+INT3 的机器码就是一个简单的 `0xCC`（很方便记忆），当 GDB 想给某个进程（还记得我们讨论过进程的概念）下断点时，比如 `b *0x55555555519f`（注意地址前面的 `*`），其在底层做的事情其实很简单（也有点 dirty）——将 `0x55555555519f` 处的这个字节替换为 `0xCC`，也就是 `INT3` 指令.
+
+需要注意 `0x55555555519f` 应该是一条指令的开头，这样 CPU 不会先执行一个不完整的指令，再执行 `INT3`.
+
+替换完成之后（需要保存原来的字节），当我们在 GDB 中按下 `c/r` 命令时， CPU 会直接开始运行，当执行到 `INT3` 指令时，进程就会停下来（准确说是陷入内核态），然后通知 GDB，GDB 就知道进程停下来了，这时，如果我们再次使用 `c` 命令：
+
+- GDB 需要将原来的指令字节还原回去
+- 再将 `IP`（指令计数器）倒退一个字节
+- 然后执行一条指令（怎么让 CPU 执行且只执行一条指令，也是个问题🤔）
+- 再把原来的指令的第一个字节替换为 `CC`（让这个断点下次依然能够停下）
+- 最后让 CPU 继续执行下去.
+
+一个简单的 `continue` 指令背后原来这么复杂. 但是又觉得计算机的世界好像没有什么魔法！不过是将一个字节做几次替换，CPU 其实也不知道什么是断点，CPU 只知道碰到这个指令需要停下来.
+
+### 2.4 实验评测
 
 #### 本地测试
 
@@ -157,11 +314,12 @@ char *phase_1_sol(void) {
 :::caut
 - 注意 OJ 只会使用你使用 `make` 命令提交的文件，这视为你认为这次 `make` 之后的结果是可以运行的. **使用 `make all` 等命令编译出来的结果即便是正确的，OJ 也不会用来评测，一定要运行 `make` 命令（没有任何参数）才算是你要提交当前修改完毕的代码文件**
 - OJ 大概 60s 拉取一次未评测代码，然后进行评测，请耐心等待.
+- 代码上传到 OJ 后，即使 OJ 在运行过程中 bomb explode，也不会扣除你的分数，请放心使用 OJ，本次依然依然没有提交次数限制. 😋
 :::
 
 <div class="oj-box" data-api="https://chrjeb.cn/api/submission/" course="ICS2026" module="bomblab">Lab2 - BombLab</div>
 
-### 2.4 注意事项与提示
+### 2.5 注意事项与提示
 
 1. 若你不了解 Makefile 文件，建议每次完成编辑后使用 `make` 命令编译；
 2. 如果你不适应 linux 的编辑器，可以尝试使用 VSCode + ssh 的方式来编辑文件，具体操作方法自行搜索；
