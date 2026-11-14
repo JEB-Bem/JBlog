@@ -8,7 +8,7 @@ description: 欢迎来到计算机系统基础Ⅱ实验
 ---
 
 > - 本文提供[在线版本](https://chrjeb.cn/ics-lab2.html)，最新信息将会更新在在线版本上.
-> - 本次实验改编自 CSAPP:DataLab
+> - 本次实验改编自 CSAPP:BombLab
 
 :::warn
 - Lab1 实验报告提交截止:  <span style="color: red;">2026-11-13 23:59</span>
