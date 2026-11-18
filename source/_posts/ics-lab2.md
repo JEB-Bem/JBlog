@@ -326,6 +326,8 @@ INT3 的机器码就是一个简单的 `0xCC`（很方便记忆），当 GDB 想
 
 1. 若你不了解 Makefile，建议每次完成编辑后使用 `make` 命令编译；
 2. 如果你不习惯 Linux 的编辑器，可以尝试使用 VSCode + SSH 的方式来编辑文件，具体操作方法自行搜索；
+3. 在 gdb 中如果炸弹爆炸，请使用 `file <你的炸弹路径（比如 ./bomb）>` 恢复；
+4. [edit: 2026-11-18] 若 `make submit` 返回 `module closed/(not open)`，说明该实验 OJ 已关闭.
 
 #### references
 - 复旦大学-ICS-Lab2 https://ics-26fall-fdu.github.io/labs/lab2-bomb-lab/
